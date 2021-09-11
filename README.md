@@ -6,13 +6,13 @@ Of course this works for any instrument recorded with a USB audio interface, not
 * Something to make music with
 * A class-compliant USB audio interface. The project is written for the Expert Sleepers ES8, an audio interface in a eurorack module form factor. With some edits, the code should work with any class-compliant interface.
 * A Raspberry Pi 400. Other Raspberry PI variations should work too, specifically a Raspberry Pi 4, which is basically what is inside a Pi 400. 
-  * Since the Raspberry Pi 400 is built into its own keyboard, but other Pi versions are just a raw circuit board, consider getting a case for your Pi unless it is a Pi 400. 
-    * When choosing a case, consider that a case without a fan will be silent, whereas a case with a fan will be noisy while you are making music.
+ * Since the Raspberry Pi 400 is built into its own keyboard, but other Pi versions are just a raw circuit board, consider getting a case for your Pi unless it is a Pi 400. 
+  * When choosing a case, consider that a case without a fan will be silent, whereas a case with a fan will be noisy while you are making music.
 * A recent version of Raspbian, the default OS on the Raspberry Pi. I am using "Raspbian GNU Linux 10 (buster)" 
 * A large, fast MicroSD card. An hour of recording with 4 tracks takes about 600 MiB of space as FLAC.
 * A computer with a DAW (I use a Macbook Pro with Ableton Live) that can import audio files (FLAC files, specifically)
 * Remote-control software on the computer to operate the Raspberry PI (see Pi documentation), like VNC Viewer. 
-  * You can also connect a screen, mouse and keyboard to the Pi to operate it directly, but remote operation is convenient.
+ * You can also connect a screen, mouse and keyboard to the Pi to operate it directly, but remote operation is convenient.
 * File transfer software on the computer to download the recordings from the Raspberry Pi (see Pi documentation), like FileZilla.
 
 ## Expected Skill Level
@@ -21,19 +21,40 @@ This is a coding project, not a consumer product. Teach yourself to operate a Ra
 ## Basic Operation
 
 ### Setup
-Install the projectConnect your musical instrument to your audio interface to record itConnect the USB output of your audio interface to a USB input on the Raspberry PI (######### WHICH INPUT?)
-Restart the Raspberry Pi
+1. Install the project
+1. Connect your musical instrument to your audio interface to record it
+1. Connect the USB output of your audio interface to a USB input on the Raspberry PI (######### WHICH INPUT?)
+1. Restart the Raspberry Pi
 
 ### Status LED
-An LED on the Raspberry Pi shows recording state:Slow blink: Recording in progressFast blink: Not recording, no audio interface foundMedium blink: Not recording, no audio interface found, but post-processing recent recordingsIrregular LED (showing disk access, this is what the LED normally does): ###### ???? 
+An LED on the Raspberry Pi shows recording state:
+* Slow blink: Recording in progress
+* Fast blink: Not recording, no audio interface found
+* Medium blink: Not recording, no audio interface found, but post-processing recent recordings
+* Irregular LED (showing disk access, this is what the LED normally does): ###### ???? 
 
 ### Recording
-Power on your audio interface and your instrumentPower on the Raspberry PiMake musicWhen done, power off your audio interface or disconnect it from the Raspberry Pi. Within ten seconds or so, the LED will start blinking rapidly.Now turn off the Raspberry Pi, or give it time to finish processing raw recordings first. Processing starts a little while after recording stops. While processing, the LED blinks at medium speed. Processing takes about two minutes per hour of raw recordings with 4 tracks.After processing is done, the LED goes inactive, flickering occasionally. Now your most recent recording has been processed and is available for download.Turn off the Raspberry Pi or connect your computer to transfer the recording.
+1. Power on your audio interface and your instrument
+2. Power on the Raspberry PiMake music
+3. When done, power off your audio interface or disconnect it from the Raspberry Pi. Within ten seconds or so, the LED will start blinking rapidly. 
+4. Now turn off the Raspberry Pi, or give it time to finish processing raw recordings first. 
+* Processing starts a little while after recording stops. 
+* While processing, the LED blinks at medium speed. 
+* Processing takes about two minutes per hour of raw recordings with 4 tracks.
+* After processing is done, the LED goes inactive, flickering occasionally. Now your most recent recording has been processed and is available for download.
+* Turn off the Raspberry Pi or connect your computer to transfer the recording.
+* If you turn off the Raspberry Pi *without* giving it time to process the most recent recording, it will process it the next time you power up the Pi.
 
 ### Transferring Files
-Power on the Raspberry Pi
-On your computer, connect to the Pi using your file transfer software
-Navigate to the Processed Recordings folder, transfer the recordings you want to your computer, and import them into your DAW. Consider deleting the processed recording from the Raspberry Pi after transferring it, to free up space.When done, turn off the Raspberry Pi. Files can be transferred while recording is happening or not. Only past recordings that have been processed are available for transfer. If recording is currently active, the current recording must stop and be processed before it becomes available for transfer.
+1. Power on the Raspberry Pi
+2. On your computer, connect to the Pi using your file transfer software
+3. In the file transfer software, navigate to the Processed Recordings folder
+4. Transfer the recordings you want to your computer
+5. On your computer, import the transferred files into your DAW. 
+6. Consider deleting the processed recording from the Raspberry Pi after transferring it, to free up space.
+7. When done, turn off the Raspberry Pi. 
+ 
+Files can be transferred while recording is happening or not. Only past recordings that have been processed are available for transfer in the Processed Recordings folder. If recording is currently active, the current recording must stop and be processed before it becomes available for transfer.
 
 ## How it Works
 As soon as the Raspberry Pi has booted, it starts looking for an audio interface. If it finds one, it starts recording, and keeps recording as long as the interface is there (and powered on) and as long as the Raspberry Pi is running. Look for the LED to start blinking slowly when recording starts.
