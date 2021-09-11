@@ -93,26 +93,26 @@ The ffmpeg command parameters need to be modified when other audio interfaces ar
 As you will learn when reviewing ffmpeg documentation, the parameter sequence consists of a set of source parameters, and one or more sets of destination parameters.
 
 ## Files & Locations
-Log files in /home/pi/
-* monit.log, capturing output from monit and from bash scripts running as programs from monit
-* logster.log, capturing output from bash scripts running as processes
-* recordings.log, capturing date- and timestamps for raw recordings
-* sourceCheck.log, capturing if the audio interface has been found when looking for it, with date- and timestamp
+Log files in */home/pi/*
+* *monit.log,* capturing output from monit and from bash scripts running as programs from monit
+* *logster.log,* capturing output from bash scripts running as processes
+* *recordings.log,* capturing date- and timestamps for raw recordings
+* *sourceCheck.log,* capturing if the audio interface has been found when looking for it, with date- and timestamp
 
-/etc/monit/monitrc Is the the monit control file
+*/etc/monit/monitrc* is the the monit control file
 
-Bash script files in /usr/local/bin/
-* starter.sh starts recording audio
-* stopper.sh stops recording by sending a SIGTERM signal to the recording process
-* sourceCheck.sh checks availability of audio interface
-* isRecordingActive checks if the recording process is running, used by starter.sh and by LEDhandler.sh
-* LEDhandler.sh updates the status LEDprocessRawAudio.sh processes raw audio files, splitting into 1-hour aiff files and then resaving as flac, grouped in subfolders
-* deleteOldRecordings.sh (not used yet:) will delete the oldest subfolder of recordings in /home/pi/processedRecordings to free up disk space
+Bash script files in */usr/local/bin/*
+* *starter.sh* starts recording audio
+* *stopper.sh* stops recording by sending a SIGTERM signal to the recording process
+* *sourceCheck.sh* checks availability of audio interface
+* *isRecordingActive* checks if the recording process is running, used by starter.sh and by LEDhandler.sh
+* *LEDhandler.sh* updates the status LEDprocessRawAudio.sh processes raw audio files, splitting into 1-hour aiff files and then resaving as flac, grouped in subfolders
+* *deleteOldRecordings.sh* (not used yet:) will delete the oldest subfolder of recordings in /home/pi/processedRecordings to free up disk space
 
 Directories for Recordings
-* Raw recordings are saved in /home/pi/rawRecordings/
-* Processed recordings are saved in subfolders under /home/pi/processedRecordings
-* A utility folder is used for temporary files during processing: /home/pi/processingRecordings
+* Raw recordings are saved in */home/pi/rawRecordings/*
+* Processed recordings are saved in subfolders under */home/pi/processedRecordings*
+* A utility folder is used for temporary files during processing: */home/pi/processingRecordings*
 
 Installation
 #######
