@@ -50,7 +50,7 @@ If you turn off the Raspberry Pi while it is recording, the recording simply sto
 If you turn off the Pi *without* giving it time to process recent recordings, or while it is processing recordings, the processing of raw recordings will restart  the next time you power up the Pi.
 
 ### Transferring Files
-1. Power on the Raspberry Pi
+1. Power on the Raspberry Pi if it is off 
 2. On your computer, connect to the Pi using your file transfer software
 3. In the file transfer software, navigate to the Processed Recordings folderon the Pi.
 4. Transfer the recordings you want to your computer
@@ -59,7 +59,7 @@ If you turn off the Pi *without* giving it time to process recent recordings, or
 7. When done, turn off the Raspberry Pi. 
  
 * Files can be transferred to the computer while recording is happening. 
-* Only past recordings that have been processed are available for transfer in the Processed Recordings folder. 
+* Only past recordings that have been processed are available for transfer in the *Processed Recordings* folder. 
 * If recording is currently active, the current recording must stop and be processed before it becomes available for transfer.
 
 ## How it Works
@@ -67,11 +67,11 @@ As soon as the Raspberry Pi has booted, it starts looking for an audio interface
 
 Recording is happening the entire time the Pi and the Audio Interface are running, regardless of you making any music or not. 
 
-When you are done making music, power off your audio interface, to end the recording. Leave the Pi running to let it process the just-finished recording or power it down, to process the recording next time.
+When the audio interface is powered off, recording ends. With the audio interface off, the Pi starts looking for the audio interface again. As soon as it finds it (after you power up the interface again), recording resumes, to a new set of files.
 
-With the audio interface off, the Pi starts looking for the audio interface again. As soon as it finds it (after you power up the interface again), recording resumes in a new set of files.
+The raw recordings are Flac files, which have lossless compression, taking up about half the space of an uncompressed audio file. There is one file per track. 
 
-The raw recordings are Flac files, which have lossless compression, taking up about half the space of an uncompressed audio file. There is one file per track. Before being ready for the DAW on the computer, the raw recordings need to be processed. This happens in the background. Whenever there is a set of raw recording files that is no longer being recorded to, those files are processed. When processing is done, the processed files replace the raw files.
+Before being ready for the DAW on the computer, the raw recordings need to be processed. This happens in the background. Whenever there is a set of raw recording files sitting in the *Raw Recordings* folder that is no longer being recorded to, those files are processed. When processing is done, after the processed files are saved to the *Processed Recordings* folder, the corresponing raw files are deleted.
 
 ### Why Is Processing Necessary?
 In theory, the raw recordings could go straight into a DAW. In practice though, when recording stops, the raw file is left with incomplete metadata and Ableton rejects it when importing. Processing fixes the metadata.
@@ -81,15 +81,16 @@ Raw files can also become very large, for very long recordings (when recording o
 Processing splits the raw recordings into one-hour chunks. Those chunks can be spliced seamlessly in the DAW, and uninteresting parts of long recordings can be easily discarded.
 
 ### Behind the Scenes
-Overall operations are controlled by the Monit utility, which (you guessed it) monitors resources and processes, as defined in the monitrc file. Monit looks for the audio interface, launches and terminates recording, launches processing, and orchestrates updates to the LED. Monit also watches available disk space. To do all this, Monit calls bash shell scripts, as processes (running in the background), or as programs (running in the foreground.) The scripts use .pid files to keep track of running processes. #### STATUS STUFF ##### DELETING STUFF?
+Overall operations are controlled by the *Monit* utility, which (you guessed it) monitors resources and processes, as defined in the *monitrc* file. Monit looks for the audio interface, launches and terminates recording, launches processing, and orchestrates updates to the LED. Monit also watches available disk space. To do all this, Monit calls bash shell scripts, as processes (running in the background), or as programs (running in the foreground.) The scripts use .pid files to keep track of running processes.
 
-Recording and processing is done using the ffmpeg command, a powerful recording utility, accessing the audio interface via the ALSA audio system. While recording, the audio is also passed back to the audio interface for playback to provide visual feedback on the LEDs of the ES8 interface. In theory, this output could be used for audio monitoring through the ES8, but in practice the latency is far too high.
+Recording and processing is done using the *ffmpeg* command, a powerful recording utility, accessing the audio interface via the *ALSA* audio system. While recording, the audio is also passed back to the audio interface for playback to provide visual feedback on the LEDs of the ES8 interface. In theory, this output could be used for audio monitoring through the ES8, but in practice the latency is far too high.
 
 Raw recording files, processed recordings, and interim files (during processing) live in their own subfolders. Processed recordings are grouped together in subfolders per recording session. Files are named by track number and by recording date- and timestamp.
 
 ## Using Other Audio Interfaces
-The ffmpeg command parameters need to be modified when other audio interfaces are used. The parameters can be counterintuitive. For example, the ES8 interface, while recording 4 channels, actually transmits 8 channels, and while the recording is done in 24bit format, it is actually delivered as 32bit, 
-As you will learn when reviewing ffmpeg documentation, the parameter sequence consists of a set of source parameters, and one or more sets of destination parameters. ####Review Language. #####Add file handling description
+The ffmpeg command parameters need to be modified when other audio interfaces are used, to match the channel count, recording frequency and data format of the interface.
+
+As you will learn when reviewing ffmpeg documentation, the parameter sequence consists of a set of source parameters, and one or more sets of destination parameters.
 
 ## Files & Locations
 Log files in /home/pi/
@@ -103,7 +104,8 @@ Log files in /home/pi/
 Bash script files in /usr/local/bin/
 * starter.sh starts recording audio
 * stopper.sh stops recording by sending a SIGTERM signal to the recording process
-* sourceCheck.sh checks availability of audio interfaceisRecordingActive checks if the recording process is running, used by starter.sh and by LEDhandler.sh
+* sourceCheck.sh checks availability of audio interface
+* isRecordingActive checks if the recording process is running, used by starter.sh and by LEDhandler.sh
 * LEDhandler.sh updates the status LEDprocessRawAudio.sh processes raw audio files, splitting into 1-hour aiff files and then resaving as flac, grouped in subfolders
 * deleteOldRecordings.sh (not used yet:) will delete the oldest subfolder of recordings in /home/pi/processedRecordings to free up disk space
 
