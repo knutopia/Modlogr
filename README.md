@@ -99,7 +99,7 @@ Log files in */home/pi/*
 * *recordings.log,* capturing date- and timestamps for raw recordings
 * *sourceCheck.log,* capturing if the audio interface has been found when looking for it, with date- and timestamp
 
-*/etc/monit/monitrc* is the the monit control file
+*/etc/monit/monitrc* is the monit control file
 
 Bash script files in */usr/local/bin/*
 * *starter.sh* starts recording audio
