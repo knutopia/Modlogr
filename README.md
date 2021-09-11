@@ -6,13 +6,13 @@ Of course this works for any instrument recorded with a USB audio interface, not
 * Something to make music with
 * A class-compliant USB audio interface. The project is written for the Expert Sleepers ES8, an audio interface in a eurorack module form factor. With some edits, the code should work with any class-compliant interface.
 * A Raspberry Pi 400. Other Raspberry PI variations should work too, specifically a Raspberry Pi 4, which is basically what is inside a Pi 400. 
-** Since the Raspberry Pi 400 is built into its own keyboard, but other Pi versions are just a raw circuit board, consider getting a case for your Pi unless it is a Pi 400. 
-*** When choosing a case, consider that a case without a fan will be silent, whereas a case with a fan will be noisy while you are making music.
+  * Since the Raspberry Pi 400 is built into its own keyboard, but other Pi versions are just a raw circuit board, consider getting a case for your Pi unless it is a Pi 400. 
+    * When choosing a case, consider that a case without a fan will be silent, whereas a case with a fan will be noisy while you are making music.
 * A recent version of Raspbian, the default OS on the Raspberry Pi. I am using "Raspbian GNU Linux 10 (buster)" 
 * A large, fast MicroSD card. An hour of recording with 4 tracks takes about 600 MiB of space as FLAC.
 * A computer with a DAW (I use a Macbook Pro with Ableton Live) that can import audio files (FLAC files, specifically)
 * Remote-control software on the computer to operate the Raspberry PI (see Pi documentation), like VNC Viewer. 
-** You can also connect a screen, mouse and keyboard to the Pi to operate it directly, but remote operation is convenient.
+  * You can also connect a screen, mouse and keyboard to the Pi to operate it directly, but remote operation is convenient.
 * File transfer software on the computer to download the recordings from the Raspberry Pi (see Pi documentation), like FileZilla.
 
 ## Expected Skill Level
@@ -37,10 +37,16 @@ Navigate to the Processed Recordings folder, transfer the recordings you want to
 
 ## How it Works
 As soon as the Raspberry Pi has booted, it starts looking for an audio interface. If it finds one, it starts recording, and keeps recording as long as the interface is there (and powered on) and as long as the Raspberry Pi is running. Look for the LED to start blinking slowly when recording starts.
+
 Recording is happening the entire time the Pi and the Audio Interface are running, regardless of you making any music or not. When you are done making music, power off your audio interface, to end the recording. Leave the Pi running to let it process the just-finished recording or power it down, to process the recording next time.
+
 With the audio interface off, the Pi starts looking for the audio interface again. As soon as it finds it (after you power up the interface again), recording resumes in a new set of files.
+
 The raw recordings are Flac files, which have lossless compression, taking up about half the space of an uncompressed audio file. There is one file per track. Before being ready for the DAW on the computer, the raw recordings need to be processed. This happens in the background. Whenever there is a set of raw recording files that is no longer being recorded to, those files are processed. When processing is done, the processed files replace the raw files.
-Why Is Processing Necessary?In theory, the raw recordings could go straight into a DAW. In practice though, when recording stops, the raw file is left with incomplete metadata and Ableton rejects it when importing. Processing fixes the metadata. 
+
+### Why Is Processing Necessary?
+In theory, the raw recordings could go straight into a DAW. In practice though, when recording stops, the raw file is left with incomplete metadata and Ableton rejects it when importing. Processing fixes the metadata.
+
 Raw files can also become very large, for very long recordings (when recording over night, for example.)  Very long recordings are awkward to handle in a DAW. The resulting files can be too large for a DAW to open. (There appears to be a size limit corresponding to the max size of a WAV file, which is a standard uncompressed audio format.) Processing splits the raw recordings into one-hour chunks. Those chunks can be spliced seamlessly in the DAW, and uninteresting parts of long recordings can be easily discarded.
 
 ### Behind the Scenes
