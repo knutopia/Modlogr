@@ -11,7 +11,7 @@ Of course this works for any instrument recorded with a USB audio interface, not
 * A large, fast MicroSD card. An hour of recording with 4 tracks takes about 600 MiB of space as FLAC.
 * A computer with a DAW (I use a Macbook Pro with Ableton Live) that can import audio files (FLAC files, specifically)
 * Remote-control software on the computer to operate the Raspberry PI (see Pi documentation), like VNC Viewer. 
-  * You can also connect a screen, mouse and keyboard to the Pi to operate it directly, but remote operation is convenient.
+  * You can also connect a screen, mouse and keyboard to the Pi to operate it directly (or use the built-in keyboard of the Pi 400), but remote operation is convenient.
 * File transfer software on the computer to download the recordings from the Raspberry Pi (see Pi documentation), like FileZilla.
 
 ## Expected Skill Level
