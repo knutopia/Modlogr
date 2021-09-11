@@ -66,7 +66,7 @@ case $cmd in
           echo $id " source unavailable"
           modprobe ledtrig_timer  #source unavailable LED
           echo "timer" >/sys/class/leds/led0/trigger
-          echo 150 >/sys/class/leds/led0/delay_on
+          echo 100 >/sys/class/leds/led0/delay_on
           echo 150 >/sys/class/leds/led0/delay_off 
         fi
       fi
