@@ -52,10 +52,10 @@ If you turn off the Pi *without* giving it time to process recent recordings, or
 ### Transferring Files
 1. Power on the Raspberry Pi
 2. On your computer, connect to the Pi using your file transfer software
-3. In the file transfer software, navigate to the Processed Recordings folder
+3. In the file transfer software, navigate to the Processed Recordings folderon the Pi.
 4. Transfer the recordings you want to your computer
 5. On your computer, import the transferred files into your DAW. 
-6. Consider deleting the processed recording from the Raspberry Pi after transferring it, to free up space.
+6. in the file transfer software, delete the processed recording you just transferred from the Raspberry Pi, to free up space. Aslo delete other recordings that you don't plan to use.
 7. When done, turn off the Raspberry Pi. 
  
 * Files can be transferred to the computer while recording is happening. 
