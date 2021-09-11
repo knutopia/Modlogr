@@ -6,7 +6,7 @@
 pidFile="/home/pi/ffmpeg.pid"
 #process_flag_file="/home/pi/processFlag.txt"
 id="stopper.sh"
-echo $id `date '+%F_%H:%M:%S'`
+echo `date '+%F_%H:%M:%S'` $id
 
 if [[ -f $pidFile  ]]; then
   echo $id "Pid file found."

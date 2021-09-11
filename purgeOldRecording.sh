@@ -7,7 +7,7 @@
 # finds the disk filling up
 
 id="purgeOldRecording.sh"
-echo $id `date '+%F_%H:%M:%S'`
+echo `date '+%F_%H:%M:%S'` $id
 
 if [ ! -d "/home/pi/processedRecordings" ] ; then
   echo $id "no /home/pi/processedRecordings found!"

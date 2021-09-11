@@ -21,7 +21,7 @@ recordings_file="/home/pi/recordings.log" # debug use
 #process_flag_file="/home/pi/processFlag.txt" # checked by monit to start
                                              # post processing of recordings
 id="starter.sh"
-echo $id `date '+%F_%H:%M:%S'`
+echo `date '+%F_%H:%M:%S'` $id
 
 printf -v sourceCheckTime '%(%Y-%m-%d_%H:%M)T'_sourceCheck
 

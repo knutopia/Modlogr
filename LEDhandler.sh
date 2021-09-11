@@ -8,7 +8,7 @@ cmd=$1
 
 recordingPidFile="/home/pi/ffmpeg.pid"
 id="LEDhandler.sh"
-echo $id $cmd `date '+%F_%H:%M:%S'`
+echo `date '+%F_%H:%M:%S'` $id $cmd
 
 case $cmd in
     recordingStart)  # sent from starter.sh after the ffmpeg recording

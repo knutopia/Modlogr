@@ -1,7 +1,7 @@
 #!/bin/bash
 
 id="processRawAudio.sh"
-echo $id `date '+%F_%H:%M:%S'` >>/home/pi/logster.log
+echo `date '+%F_%H:%M:%S'` $id >>/home/pi/logster.log
 
 if [ ! -d "/home/pi/processingRecordings" ] ; then
   mkdir /home/pi/processingRecordings
