@@ -87,7 +87,7 @@ for rawFile in /home/pi/rawRecordings/*.flac ; do
         echo $id "-Success found, deleting raw file." \
         >>/home/pi/logster.log
         rm "$rawFile"
-        rmdir /home/pi/processingRecordings
+        rmdir /home/pi/processingRecordings/
       else
         echo $id "-Success elusive, keeping raw file." \
         >>/home/pi/logster.log
