@@ -1,0 +1,42 @@
+#!/bin/bash
+
+pidFile="/home/pi/ffmpeg.pid"
+process_flag_file="/home/pi/processFlag.txt"
+id="stopper.sh"
+echo $id `date '+%F_%H:%M:%S'`
+
+if [ -f $pidFile  ]; then
+  echo $id "Pid file found."
+  #does the process exist?
+  pgrep -F $pidFile
+  pid_file_is_stale=$?
+
+  if [ $pid_file_is_stale -eq 1 ]; then
+    echo $id "Pid file is stale. Removing it."
+    rm $pidFile
+  else
+    echo $id "Pid is live - killing it."
+    while [ pkill -f $pidFile ]; do
+
+      sleep 5
+    done
+
+#   kill -SIGTERM `cat $pidFile`
+
+    #did it work?
+    pgrep -F $pidFile
+    pid_is_stale=$?
+
+    if [ $pid_file_is_stale -eq 1 ]; then
+      echo $id "Didn't work, trying harder."
+      kill -SIGKILL `cat $pidFile`
+    else
+      echo $id "It's dead."
+    fi
+    rm $pidFile
+  fi
+else
+  echo $id "No pid file, no kill."
+fi
+
+echo $id "Monit looks for this file to kick of processing of recordings." > $process_flag_file

@@ -1,0 +1,75 @@
+
+#!/bin/bash
+
+if [ ! -d "/home/pi/processingRecordings" ] 
+then
+  mkdir /home/pi/processingRecordings
+fi
+
+#iterate over available raw recording files
+#get raw recording file
+# if its open for write by ffmpeg then skip it (next iteration)
+# store its name
+
+#for rawFile in /home/pi/rawRecordings/track*.flac ; 
+for rawFile in /home/pi/rawRecordings/*.flac ; 
+do 
+# file $rawFile ;
+# if [[ `lsof | grep $rawFile` ]]
+  if ! [[ `lsof -c ffmpeg -- $rawFile` ]]
+  #WHAT ABOUT THIS !
+  then
+    if [ `find "$rawFile" -mmin +1` ]
+    then
+      echo "## OLD" "Not open:" "$rawFile"
+
+      if [ ! -d "/home/pi/processingRecordings" ] 
+      then
+        mkdir /home/pi/processingRecordings
+      fi
+      echo "## Splitting " "$rawFile"
+      ffmpeg -hide_banner -i "$rawFile" \
+      -f segment -segment_time 3600 -c:a pcm_s24be \
+      /home/pi/processingRecordings/interim-%03d.aiff
+
+      if [ ! -d "/home/pi/processedRecordings" ] 
+      then
+        mkdir /home/pi/processedRecordings
+      fi
+      for interimFile in /home/pi/processingRecordings/*.aiff ; 
+      do
+        echo "## Recompressing flac from " "$interimFile"
+        ffmpeg -hide_banner -i "$interimFile" \
+        -c:a pcm_s32le \
+        /home/pi/processedRecordings/done-%03d.flac
+        # CAPTURE ORIGINAL NAME
+        # DELETE INTERMEDIATES
+        echo "## Done"
+      done       
+      # DELETE RAW
+    else
+      echo "FRESH" "Not open:" "$rawFile"
+    fi
+  else
+    echo "Open:" "$rawFile"
+  fi
+# echo [[ `lsof | grep $rawFile` ]]
+done
+
+
+# split it into 1hr aiff chunks
+#  wait for completion
+#  check for success
+
+# iterate over aiff chunks
+#  resave each as flac
+#  check for success
+#   delete resaved aiff chunk
+
+# delete raw recording
+#next iteration
+#done
+
+##test_file="/home/pi/rawRecordings/test.txt"
+##echo hi there >> $test_file 
+

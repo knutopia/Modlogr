@@ -1,0 +1,118 @@
+#!/bin/bash
+
+pid_file="/home/pi/recordingPostProcessing.pid"
+
+# & ffmpeg_pid=$!
+# echo $ffmpeg_pid > $pid_file
+
+
+
+if [ ! -d "/home/pi/processingRecordings" ] ; then
+  mkdir /home/pi/processingRecordings
+fi
+
+#iterate over available raw recording files
+#get raw recording file
+# if its open for write by ffmpeg then skip it (next iteration)
+# store its name
+# split raw file into interim 1-hour aiffs
+# re-encode each aiff to flac (to force correct metadata for Ableton Live)
+# delete each interim file after re-encoding
+# delete raw file and interim folder upon successful completion
+
+if test -n "$(find /home/pi/rawRecordings/ -maxdepth 1 -name '*.flac')" ; then
+for rawFile in /home/pi/rawRecordings/*.flac ; do
+
+  origFileName="$(basename $rawFile .flac)"
+  if ! [[ `lsof -f -w -- "$rawFile"` ]] ; then
+
+    if [ `find "$rawFile" -mmin +1` ] ; then
+
+      echo "File not open, not too fresh - good to go:" "$origFileName"
+
+      success=true  #track execution to later delete raw file
+
+      if [ ! -d "/home/pi/processingRecordings" ] ; then
+        mkdir /home/pi/processingRecordings
+      fi
+
+      echo "-Splitting" "$origFileName"
+
+      nice -n 10 ffmpeg -y -hide_banner -loglevel quiet -stats \
+      -i "$rawFile" \
+      -f segment -segment_time 3600 -c:a pcm_s24be \
+      /home/pi/processingRecordings/"$origFileName"-%03d_interim.aiff
+#     && echo "SUCCEEDED" || echo "FAILED"
+      ffsuccess=$?
+      echo $ffsuccess
+      if [ "${ffsuccess}" -ne "0" ] ; then
+        echo "-FAILED to split" "$origFileName"
+        success=false
+      fi
+
+      if [ ! -d "/home/pi/processedRecordings" ] ; then
+        mkdir /home/pi/processedRecordings
+      fi
+
+      for interimFile in /home/pi/processingRecordings/*.aiff ; do
+
+        interimFileName="$(basename $interimFile)"
+        splitFileName="$(basename $interimFile _interim.aiff).flac"
+        echo "--Recompressing flac from" "$interimFileName"
+
+        nice -n 10 ffmpeg -y -hide_banner -loglevel quiet -stats \
+        -i "$interimFile" -c hsas \
+        /home/pi/processedRecordings/"$splitFileName"
+#       && echo "SUCCEEDED" || echo "FAILED"
+        ffsuccess=$?
+        echo $ffsuccess
+        # delete interim file upon successful recompression
+	if [ "${ffsuccess}" -eq "0" ] ; then
+	  echo "--Recompressed to" "$splitFileName"
+	  rm "$interimFile"
+	else
+          echo "--FAILED to recompress" "$interimFile" "to" "$splitFileName"
+          success=false
+	fi
+      done
+      success=true  #track execution to later delete raw file
+
+      success=true  #track execution to later delete raw file
+      # delete raw file upon overall success
+      if [ "$success" ] ; then
+        echo "-Success found, deleting raw file."
+        rm "$rawFile"
+        rmdir /home/pi/processingRecordings
+      else
+        echo "-Success elusive, keeping raw file."
+      fi
+
+    else
+      echo "File too fresh to touch, skipping:" "$origFileName"
+    fi
+  else
+    echo "File open, skipping:" "$origFileName"
+  fi
+done 
+fi
+
+
+# split it into 1hr aiff chunks
+#  wait for completion
+#  check for success
+
+# iterate over aiff chunks
+#  resave each as flac
+#  check for success
+#   delete resaved aiff chunk
+
+# delete raw recording
+#next iteration
+#done
+
+##test_file="/home/pi/rawRecordings/test.txt"
+##echo hi there >> $test_file 
+
+#       printf -v altSplitFileName '$(basename $interimFile _interim.aiff)'.flac -1 ;
+#       echo "COMPARING:" "$altSplitFileName" 
+#       echo " TO " "$splitFileName"

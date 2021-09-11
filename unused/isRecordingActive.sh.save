@@ -1,0 +1,12 @@
+     if [[ -f $recordingPidFile  ]]; then
+        pgrep -F $recordingPidFile >/dev/null
+        found_alive=$?
+
+        if [[ $found_alive -eq 1 ]]; then
+
+     if [[ -f $recordingPidFile  ]]; then
+        pgrep -F $recordingPidFile >/dev/null
+        found_alive=$?
+
+        if [[ $found_alive -eq 1 ]]; then
+
