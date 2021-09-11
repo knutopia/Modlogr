@@ -27,10 +27,10 @@ This is a coding project, not a consumer product. Teach yourself to operate a Ra
 
 ### Status LED
 An LED on the Raspberry Pi shows recording state:
-* Slow blink: Recording in progress
-* Fast blink: Not recording, no audio interface found
-* Medium blink: Not recording, no audio interface found, but post-processing recent recordings
-* Irregular LED (showing disk access, this is what the LED normally does): ###### ???? 
+* Slow blink (2s on, short moment off): Recording in progress
+* Fast blink (4 blink per second): Not recording, no audio interface found
+* Medium blink (1 blink per second): Not recording, no audio interface found, but post-processing recent recordings
+* Irregular LED, mostly off (showing disk access, this is what the LED normally does): this happens for brief periods when the audio interface is available, but recording has not started yet
 
 ### Recording
 1. Power on your audio interface and your instrument
