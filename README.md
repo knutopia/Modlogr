@@ -42,7 +42,11 @@ An LED on the Raspberry Pi shows recording state:
 * Processing takes about two minutes per hour of raw recordings with 4 tracks.
 * After processing is done, the LED goes inactive, flickering occasionally. Now your most recent recording has been processed and is available for download.
 * Turn off the Raspberry Pi or connect your computer to transfer the recording.
-* If you turn off the Raspberry Pi *without* giving it time to process the most recent recording, it will process it the next time you power up the Pi.
+
+#### Powering Down the Pi During Recording or Processing
+If you turn off the Raspberry Pi while it is recording, the recording simply stops. Next time you turn on the Pi, any raw recordings, including this latest recording, will be processed. 
+
+If you turn off the Pi *without* giving it time to process recent recordings, or while it is processing recordings, the processing of raw recordings will restart  the next time you power up the Pi.
 
 ### Transferring Files
 1. Power on the Raspberry Pi
@@ -53,7 +57,9 @@ An LED on the Raspberry Pi shows recording state:
 6. Consider deleting the processed recording from the Raspberry Pi after transferring it, to free up space.
 7. When done, turn off the Raspberry Pi. 
  
-Files can be transferred while recording is happening or not. Only past recordings that have been processed are available for transfer in the Processed Recordings folder. If recording is currently active, the current recording must stop and be processed before it becomes available for transfer.
+* Files can be transferred to the computer while recording is happening. 
+* Only past recordings that have been processed are available for transfer in the Processed Recordings folder. 
+* If recording is currently active, the current recording must stop and be processed before it becomes available for transfer.
 
 ## How it Works
 As soon as the Raspberry Pi has booted, it starts looking for an audio interface. If it finds one, it starts recording, and keeps recording as long as the interface is there (and powered on) and as long as the Raspberry Pi is running. Look for the LED to start blinking slowly when recording starts.
