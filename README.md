@@ -34,9 +34,10 @@ An LED on the Raspberry Pi shows recording state:
 
 ### Recording
 1. Power on your audio interface and your instrument
-2. Power on the Raspberry PiMake music
-3. When done, power off your audio interface or disconnect it from the Raspberry Pi. Within ten seconds or so, the LED will start blinking rapidly. 
-4. Now turn off the Raspberry Pi, or give it time to finish processing raw recordings first. 
+2. Power on the Raspberry Pi. Give it a moment to boot and to find the audio interface, until the LED slow-blinks, meaning the Pi is recording.
+3. Make music
+4. When done, power off your audio interface or disconnect it from the Raspberry Pi. Within ten seconds or so, the LED will start blinking rapidly, meaning the Pi noticed that the interface is missing and recording has stopped.
+5. Now turn off the Raspberry Pi, or give it time to finish processing raw recordings first. 
 * Processing starts a little while after recording stops. 
 * While processing, the LED blinks at medium speed. 
 * Processing takes about two minutes per hour of raw recordings with 4 tracks.
