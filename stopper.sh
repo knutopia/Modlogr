@@ -3,8 +3,8 @@
 # script called from monit as defined in monitrc
 # stops the raw audio recording if it is active
 
-pidFile="/home/pi/ffmpeg.pid"
-#process_flag_file="/home/pi/processFlag.txt"
+pidFile="/home/pi/Modlogr/ffmpeg.pid"
+#process_flag_file="/home/pi/Modlogr/processFlag.txt"
 id="stopper.sh"
 echo `date '+%F_%H:%M:%S'` $id
 

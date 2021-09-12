@@ -1,10 +1,12 @@
 #!/bin/bash
 
 id="processRawAudio.sh"
-echo `date '+%F_%H:%M:%S'` $id >>/home/pi/logster.log
+log_file="/home/pi/Modlogr/Logs/logster.log"
+echo `date '+%F_%H:%M:%S'` $id >>$log_file
 
-if [ ! -d "/home/pi/processingRecordings" ] ; then
-  mkdir /home/pi/processingRecordings
+
+if [ ! -d "/home/pi/Modlogr/processingRecordings" ] ; then
+  mkdir /home/pi/Modlogr/processingRecordings
 fi
 
 #iterate over available raw recording files
@@ -18,40 +20,40 @@ fi
 
 success=true  #track execution to later delete raw file
               #and for exit code
-if test -n "$(find /home/pi/rawRecordings/ -maxdepth 1 -name '*.flac')" ; then
+if test -n "$(find /home/pi/Modlogr/rawRecordings/ -maxdepth 1 -name '*.flac')" ; then
 
 #LEDhandler.sh processingStart
-/bin/bash -c '2>&1 1>>/home/pi/logster.log /usr/local/bin/LEDhandler.sh processingStart'
-for rawFile in /home/pi/rawRecordings/*.flac ; do
+/bin/bash -c '2>&1 1>>$log_file /usr/local/bin/LEDhandler.sh processingStart'
+for rawFile in /home/pi/Modlogr/rawRecordings/*.flac ; do
 
   origFileName="$(basename $rawFile .flac)"
-  targetDirectoryName="/home/pi/processedRecordings/Recording_from_"${origFileName#*_}
+  targetDirectoryName="/home/pi/Modlogr/processedRecordings/Recording_from_"${origFileName#*_}
 
   if ! [[ `lsof -f -w -- "$rawFile"` ]] ; then  #not open?
 
     if [ `find "$rawFile" -mmin +1` ] ; then    #not touched within the last minute?
 
       echo $id "File not open, not too fresh - good to go:" \
-      "$origFileName" >>/home/pi/logster.log
+      "$origFileName" >>$log_file
 
-      if [ ! -d "/home/pi/processingRecordings" ] ; then
-        mkdir /home/pi/processingRecordings
+      if [ ! -d "/home/pi/Modlogr/processingRecordings" ] ; then
+        mkdir /home/pi/Modlogr/processingRecordings
       fi
 
-      echo $id "-Splitting" "$origFileName" >>/home/pi/logster.log
+      echo $id "-Splitting" "$origFileName" >>$log_file
 
       nice -n 10 ffmpeg -y -hide_banner -loglevel quiet -stats \
       -i "$rawFile" \
       -f segment -segment_time 3600 -c:a pcm_s24be \
-      /home/pi/processingRecordings/"$origFileName"-%03d_interim.aiff
+      /home/pi/Modlogr/processingRecordings/"$origFileName"-%03d_interim.aiff
       ffsuccess=$?
       if [ "${ffsuccess}" -ne "0" ] ; then
-        echo $id "-FAILED to split" "$origFileName" >>/home/pi/logster.log
+        echo $id "-FAILED to split" "$origFileName" >>$log_file
         success=false
       fi
 
-      if [ ! -d "/home/pi/processedRecordings" ] ; then
-        mkdir /home/pi/processedRecordings
+      if [ ! -d "/home/pi/Modlogr/processedRecordings" ] ; then
+        mkdir /home/pi/Modlogr/processedRecordings
       fi
 
       if [ ! -d $targetDirectoryName ] ; then
@@ -59,12 +61,12 @@ for rawFile in /home/pi/rawRecordings/*.flac ; do
       fi
 
 
-      for interimFile in /home/pi/processingRecordings/*.aiff ; do
+      for interimFile in /home/pi/Modlogr/processingRecordings/*.aiff ; do
 
         interimFileName="$(basename $interimFile)"
         targetFileName="$(basename $interimFile _interim.aiff).flac"
         echo $id "--Recompressing flac from" "$interimFileName" \
-        >>/home/pi/logster.log
+        >>$log_file
 
         nice -n 10 ffmpeg -y -hide_banner -loglevel quiet -stats \
         -i "$interimFile" \
@@ -73,11 +75,11 @@ for rawFile in /home/pi/rawRecordings/*.flac ; do
         # delete interim file upon successful recompression
 	if [ "${ffsuccess}" -eq "0" ] ; then
 	  echo $id "--Recompressed to" "$targetFileName" \
-          >>/home/pi/logster.log
+          >>$log_file
 	  rm "$interimFile"
 	else
           echo $id "--FAILED to recompress" "$interimFile" "to" "$targetFileName" \
-          >>/home/pi/logster.log
+          >>$log_file
           success=false
 	fi
       done
@@ -85,35 +87,35 @@ for rawFile in /home/pi/rawRecordings/*.flac ; do
       # delete raw file upon overall success
       if [[ $success == true ]] ; then
         echo $id "-Success found, deleting raw file." \
-        >>/home/pi/logster.log
+        >>$log_file
         rm "$rawFile"
       else
         echo $id "-Success elusive, keeping raw file." \
-        >>/home/pi/logster.log
+        >>$log_file
       fi
       echo $id "Deleting processing folder" \
-      >>/home/pi/logster.log
-      rmdir /home/pi/processingRecordings/
+      >>$log_file
+      rmdir /home/pi/Modlogr/processingRecordings/
     else
       echo $id "File too fresh to touch, skipping:" "$origFileName" \
-      >>/home/pi/logster.log
+      >>$log_file
     fi
   else
     echo $id "File open, skipping:" "$origFileName" \
-    >>/home/pi/logster.log
+    >>$log_file
   fi
 done 
 else
-  echo $id "No flac files found" >>/home/pi/logster.log
+  echo $id "No flac files found" >>$log_file
 fi
 
-/bin/bash -c '2>&1 1>>/home/pi/logster.log /usr/local/bin/LEDhandler.sh updateAfterProcessing'
+/bin/bash -c '2>&1 1>>$log_file /usr/local/bin/LEDhandler.sh updateAfterProcessing'
 
 if [[ $success == true ]] ; then
-  echo `date '+%F_%H:%M:%S'` $id "Exiting 0" >>/home/pi/logster.log
+  echo `date '+%F_%H:%M:%S'` $id "Exiting 0" >>$log_file
   exit 0
 else
-  echo `date '+%F_%H:%M:%S'` $id "Exiting 1" >>/home/pi/logster.log
+  echo `date '+%F_%H:%M:%S'` $id "Exiting 1" >>$log_file
   exit 1
 fi
 

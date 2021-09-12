@@ -1,6 +1,6 @@
 #!/bin/bash
 
-recordingPidFile="/home/pi/ffmpeg.pid"
+recordingPidFile="/home/pi/Modlogr/ffmpeg.pid"
 me="IRA"
 
 isRecordingActive(){

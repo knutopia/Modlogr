@@ -13,13 +13,14 @@
 # These activities are coordinated by monit, using /etc/monit/monitrc
 
 . /usr/local/bin/sourceCheck.sh
+. /usr/local/bin/recordAudio.sh
 
-pid_file="/home/pi/ffmpeg.pid" # watched by monit
-log_file="/home/pi/ffmpeg.log"            # debug use
-src_chk_file="/home/pi/sourceCheck.log"   # debug use
-recordings_file="/home/pi/recordings.log" # debug use
-#process_flag_file="/home/pi/processFlag.txt" # checked by monit to start
-                                             # post processing of recordings
+pid_file="/home/pi/Modlogr/ffmpeg.pid" # watched by monit
+log_file="/home/pi/Modlogr/Logs/ffmpeg.log"            # debug use
+src_chk_file="/home/pi/Modlogr/Logs/sourceCheck.log"   # debug use
+recordings_file="/home/pi/Modlogr/Logs/recordings.log" # debug use
+#process_flag_file="/home/pi/Modlogr/processFlag.txt"  # checked by monit to start
+                                                       # post processing of recordings
 id="starter.sh"
 echo `date '+%F_%H:%M:%S'` $id
 
@@ -29,45 +30,20 @@ if sourceCheck ; then
   echo "$sourceCheckTime" passed >> $src_chk_file
   echo $id "$sourceCheckTime" passed
 
-  printf -v head '/home/pi/rawRecordings/' ;
+  printf -v head '/home/pi/Modlogr/rawRecordings/' ;
   printf -v tail '%(%Y-%m-%d_%H:%M)T'.flac -1 ;
 
-  if [ ! -d "/home/pi/rawRecordings" ] 
+  if [ ! -d "/home/pi/Modlogr/rawRecordings" ] 
   then
-    mkdir /home/pi/rawRecordings
+    mkdir /home/pi/Modlogr/rawRecordings
   fi
-  cd /home/pi/
+  if [ ! -d "/home/pi/Modlogr/Logs" ] 
+  then
+    mkdir /home/pi/Modlogr/Logs
+  fi
+  cd /home/pi/Modlogr/Logs
 
-  # Expert Sleepers ES-8 
-  # appears as 8 channel device with a 7.1 channel layout
-  # it records 24bit in a 32bit package (pcm_s32le) at 48kHz
-
-  # The first output mixes 4 incoming channels to the 8 output
-  # to play back on the ES8, too laggy to use musically
-  # but good as an activity indicator 
-
-  # The second output records a flac file
-  # per track for post processing
-
-# Use this line to debug ffmpeg output to a log file
-# instead of using the -hide_banner option
-# ffmpeg -y -report \
-
-  ffmpeg -y -hide_banner \
-  -guess_layout_max 2 -f alsa \
-  -codec:a pcm_s32le -re \
-  -ac 8 -ar 48000 -i hw:CARD=ES8 \
-  -af "pan=7.1|\
-  FL<FL+.75*FC+.25*LFE|FR<FR+.75*LFE+.25*FC|\
-  BL<FL+FR+FC+LFE|BR<FL+FR+FC+LFE|\
-  FC=FL|LFE=FR|SL=FC|SR=LFE" \
-  -f alsa default \
-  -map_channel 0.0.0 "$head"track1_"$tail" \
-  -map_channel 0.0.1 "$head"track2_"$tail" \
-  -map_channel 0.0.2 "$head"track3_"$tail" \
-  -map_channel 0.0.3 "$head"track4_"$tail" \
-  2> $log_file \
-  & ffmpeg_pid=$!
+  ffmpeg_pid=$(recordAudio)
 
   echo $tail >> $recordings_file
   echo $ffmpeg_pid

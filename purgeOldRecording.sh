@@ -2,21 +2,21 @@
 
 # NOT CALLED FROM ANYWHERE YET- TODO
 # this script finds the oldest folder of recordings 
-# in /home/pi/processedRecordings and removes it.
+# in /home/pi/Modlogr/processedRecordings and removes it.
 # this is meant to happen automatically when monit 
 # finds the disk filling up
 
 id="purgeOldRecording.sh"
 echo `date '+%F_%H:%M:%S'` $id
 
-if [ ! -d "/home/pi/processedRecordings" ] ; then
-  echo $id "no /home/pi/processedRecordings found!"
+if [ ! -d "/home/pi/Modlogr/processedRecordings" ] ; then
+  echo $id "no /home/pi/Modlogr/processedRecordings found!"
   exit 1
 fi
 
-oldestDir=$(ls /home/pi/processedRecordings | sort | head -n 1)
+oldestDir=$(ls /home/pi/Modlogr/processedRecordings | sort | head -n 1)
 echo $id $oldestDir "will be removed"
-rm -r /home/pi/processedRecordings/$oldestDir
+rm -r /home/pi/Modlogr/processedRecordings/$oldestDir
 if [ $? -eq 0 ]
 then
   echo $id "It is done"

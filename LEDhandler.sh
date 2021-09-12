@@ -6,7 +6,7 @@ cmd=$1
 . /usr/local/bin/sourceCheck.sh
 . /usr/local/bin/isRecordingActive.sh
 
-recordingPidFile="/home/pi/ffmpeg.pid"
+recordingPidFile="/home/pi/Modlogr/ffmpeg.pid"
 id="LEDhandler.sh"
 echo `date '+%F_%H:%M:%S'` $id $cmd
 

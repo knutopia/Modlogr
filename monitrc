@@ -5,7 +5,7 @@ set daemon 10
 #  or when Pi starts after audio interface
 #  ...shorter delays failed to prevent this.
  
-set log /home/pi/monit.log
+set log /home/pi/Modlogr/Logs/monit.log
 
 set httpd port 2812 and
    use address localhost  # only accept connection from localhost (drop if you use M/Monit)
@@ -17,8 +17,6 @@ if space usage > 15% then alert
 #if space usage > 15% then unmonitor
 
 check directory ES8 with path /proc/asound/ES8
-#if does not exist 
-#then exec "/bin/bash -c '2>&1 1>>/home/pi/logster.log /usr/local/bin/LEDhandler.sh sourceUnavailable'"
 
 check program processRawAudio
 with path /usr/local/bin/processRawAudio.sh with timeout 10800 s
@@ -30,8 +28,8 @@ if status !=0 then alert
 check process ffmpegStreamRecorder
 with pidfile /home/pi/ffmpeg.pid
 depends on ES8
-start program = "/bin/bash -c '2>&1 1>>/home/pi/logster.log /usr/local/bin/starter.sh'"
-stop program = "/bin/bash -c '2>&1 1>>/home/pi/logster.log /usr/local/bin/stopper.sh'"
+start program = "/bin/bash -c '2>&1 1>>/home/pi/Modlogr/Logs/logster.log /usr/local/bin/starter.sh'"
+stop program = "/bin/bash -c '2>&1 1>>/home/pi/Modlogr/Logs/logster.log /usr/local/bin/stopper.sh'"
 if cpu > 15% then alert
 if cpu > 20% for 3 cycles then restart
 if cpu < 1% for 3 cycles then alert
