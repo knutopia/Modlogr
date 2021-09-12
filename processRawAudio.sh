@@ -87,12 +87,13 @@ for rawFile in /home/pi/rawRecordings/*.flac ; do
         echo $id "-Success found, deleting raw file." \
         >>/home/pi/logster.log
         rm "$rawFile"
-        rmdir /home/pi/processingRecordings/
       else
         echo $id "-Success elusive, keeping raw file." \
         >>/home/pi/logster.log
       fi
-
+      echo $id "Deleting processing folder" \
+      >>/home/pi/logster.log
+      rmdir /home/pi/processingRecordings/
     else
       echo $id "File too fresh to touch, skipping:" "$origFileName" \
       >>/home/pi/logster.log
