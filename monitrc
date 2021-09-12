@@ -1,5 +1,10 @@
 set daemon 10
-   with start delay 15 
+   with start delay 30 
+#  this start delay ensures that the intial recording won't fail
+#  when Pi gets restarted while audio interface remains on
+#  or when Pi starts after audio interface
+#  ...shorter delays failed to prevent this.
+ 
 set log /home/pi/monit.log
 
 set httpd port 2812 and
@@ -29,3 +34,5 @@ start program = "/bin/bash -c '2>&1 1>>/home/pi/logster.log /usr/local/bin/start
 stop program = "/bin/bash -c '2>&1 1>>/home/pi/logster.log /usr/local/bin/stopper.sh'"
 if cpu > 15% then alert
 if cpu > 20% for 3 cycles then restart
+if cpu < 1% for 3 cycles then alert
+if cpu < 1% for 3 cycles then restart

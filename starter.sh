@@ -49,6 +49,10 @@ if sourceCheck ; then
   # The second output records a flac file
   # per track for post processing
 
+# Use this line to debug ffmpeg output to a log file
+# instead of using the -hide_banner option
+# ffmpeg -y -report \
+
   ffmpeg -y -hide_banner \
   -guess_layout_max 2 -f alsa \
   -codec:a pcm_s32le -re \
@@ -62,6 +66,7 @@ if sourceCheck ; then
   -map_channel 0.0.1 "$head"track2_"$tail" \
   -map_channel 0.0.2 "$head"track3_"$tail" \
   -map_channel 0.0.3 "$head"track4_"$tail" \
+  2> $log_file \
   & ffmpeg_pid=$!
 
   echo $tail >> $recordings_file

@@ -109,10 +109,10 @@ fi
 /bin/bash -c '2>&1 1>>/home/pi/logster.log /usr/local/bin/LEDhandler.sh updateAfterProcessing'
 
 if [[ $success == true ]] ; then
-  echo $id "Exiting 0" `date '+%F_%H:%M:%S'` >>/home/pi/logster.log
+  echo `date '+%F_%H:%M:%S'` $id "Exiting 0" >>/home/pi/logster.log
   exit 0
 else
-  echo $id "Exiting 1" `date '+%F_%H:%M:%S'`
+  echo `date '+%F_%H:%M:%S'` $id "Exiting 1" >>/home/pi/logster.log
   exit 1
 fi
 
