@@ -26,7 +26,7 @@ if status !=0 then alert
 #if status = 0 then alert
 
 check process ffmpegStreamRecorder
-with pidfile /home/pi/ffmpeg.pid
+with pidfile /home/pi/Modlogr/ffmpeg.pid
 depends on ES8
 start program = "/bin/bash -c '2>&1 1>>/home/pi/Modlogr/Logs/logster.log /usr/local/bin/starter.sh'"
 stop program = "/bin/bash -c '2>&1 1>>/home/pi/Modlogr/Logs/logster.log /usr/local/bin/stopper.sh'"

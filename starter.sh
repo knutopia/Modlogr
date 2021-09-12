@@ -13,10 +13,8 @@
 # These activities are coordinated by monit, using /etc/monit/monitrc
 
 . /usr/local/bin/sourceCheck.sh
-. /usr/local/bin/recordAudio.sh
 
 pid_file="/home/pi/Modlogr/ffmpeg.pid" # watched by monit
-log_file="/home/pi/Modlogr/Logs/ffmpeg.log"            # debug use
 src_chk_file="/home/pi/Modlogr/Logs/sourceCheck.log"   # debug use
 recordings_file="/home/pi/Modlogr/Logs/recordings.log" # debug use
 #process_flag_file="/home/pi/Modlogr/processFlag.txt"  # checked by monit to start
@@ -33,6 +31,10 @@ if sourceCheck ; then
   printf -v head '/home/pi/Modlogr/rawRecordings/' ;
   printf -v tail '%(%Y-%m-%d_%H:%M)T'.flac -1 ;
 
+  if [ ! -d "/home/pi/Modlogr" ] 
+  then
+    mkdir /home/pi/Modlogr
+  fi
   if [ ! -d "/home/pi/Modlogr/rawRecordings" ] 
   then
     mkdir /home/pi/Modlogr/rawRecordings
@@ -43,10 +45,11 @@ if sourceCheck ; then
   fi
   cd /home/pi/Modlogr/Logs
 
-  ffmpeg_pid=$(recordAudio)
+  source recordAudio.sh
+  ffmpeg_pid=$new_pid
+  echo " " $ffmpeg_pid
 
-  echo $tail >> $recordings_file
-  echo $ffmpeg_pid
+  echo $tail $ffmpeg_pid >> $recordings_file
   echo $ffmpeg_pid > $pid_file
   echo $ffmpeg_pid >> $src_chk_file
   >>/dev/null

@@ -4,10 +4,6 @@
 # when the USB audio card is found to be available.
 # The incoming channels are also played back on the card for visual feedback.
 
-log_file="/home/pi/Modlogr/Logs/ffmpeg.log"            # debug use
-
-id="recordAudio.sh"
-echo `date '+%F_%H:%M:%S'` $id
 
   # Expert Sleepers ES-8 
   # appears as 8 channel device with a 7.1 channel layout
@@ -20,11 +16,15 @@ echo `date '+%F_%H:%M:%S'` $id
   # The second output records a flac file
   # per track for post processing
 
-# Use this line to debug ffmpeg output to a log file
+# Use this line to debug ffmpeg output to a log detailed file
 # instead of using the -hide_banner option
 # ffmpeg -y -report \
 
-recordAudio() {
+  local_log_file="/home/pi/Modlogr/Logs/ffmpeg.log"
+  local_id="recordAudio.sh"
+
+  echo -n `date '+%F_%H:%M:%S'` $local_id
+  
   ffmpeg -y -hide_banner \
   -guess_layout_max 2 -f alsa \
   -codec:a pcm_s32le -re \
@@ -38,8 +38,5 @@ recordAudio() {
   -map_channel 0.0.1 "$head"track2_"$tail" \
   -map_channel 0.0.2 "$head"track3_"$tail" \
   -map_channel 0.0.3 "$head"track4_"$tail" \
-  2> $log_file \
+  2> $local_log_file \
   & new_pid=$!
-
-  echo $new_pid
-}

@@ -93,9 +93,6 @@ for rawFile in /home/pi/Modlogr/rawRecordings/*.flac ; do
         echo $id "-Success elusive, keeping raw file." \
         >>$log_file
       fi
-      echo $id "Deleting processing folder" \
-      >>$log_file
-      rmdir /home/pi/Modlogr/processingRecordings/
     else
       echo $id "File too fresh to touch, skipping:" "$origFileName" \
       >>$log_file
@@ -105,6 +102,11 @@ for rawFile in /home/pi/Modlogr/rawRecordings/*.flac ; do
     >>$log_file
   fi
 done 
+ if [ -d "/home/pi/Modlogr/processingRecordings" ] ; then
+   echo $id "Deleting processing folder" \
+   >>$log_file
+   rmdir /home/pi/Modlogr/processingRecordings/
+ fi
 else
   echo $id "No flac files found" >>$log_file
 fi
