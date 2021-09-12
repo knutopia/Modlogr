@@ -103,6 +103,7 @@ Log files in */home/pi/Modlogr/Logs*
 
 Bash script files in */usr/local/bin/*
 * *starter.sh* starts recording audio
+* *recordAudio.sh* contains the ffmpeg call doing the actual recording, with hardware-specific parameters
 * *stopper.sh* stops recording by sending a SIGTERM signal to the recording process
 * *sourceCheck.sh* checks availability of audio interface
 * *isRecordingActive* checks if the recording process is running, used by starter.sh and by LEDhandler.sh
