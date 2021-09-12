@@ -4,11 +4,6 @@ id="processRawAudio.sh"
 log_file="/home/pi/Modlogr/Logs/logster.log"
 echo `date '+%F_%H:%M:%S'` $id >>$log_file
 
-
-if [ ! -d "/home/pi/Modlogr/processingRecordings" ] ; then
-  mkdir /home/pi/Modlogr/processingRecordings
-fi
-
 #iterate over available raw recording files
 #get raw recording file
 # if its open for write by ffmpeg then skip it (next iteration)
