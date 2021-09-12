@@ -34,7 +34,7 @@ An LED on the Raspberry Pi shows recording state:
 
 ### Recording
 1. Power on your audio interface and your instrument
-2. Power on the Raspberry Pi. Give it a moment to boot and to find the audio interface, until the LED slow-blinks, meaning the Pi is recording.
+2. Power on the Raspberry Pi. It takes the Pi about 45 seconds to boot (15s) and then to find the audio interface (30s). During this time, the LED is on (not blinking.) Once the LED starts slow-blinking, the Pi is recording.
 3. Make music
 4. When done, power off your audio interface or disconnect it from the Raspberry Pi. Within ten seconds or so, the LED will start blinking rapidly, meaning the Pi noticed that the interface is missing and recording has stopped.
 5. Now turn off the Raspberry Pi, or give it time to finish processing raw recordings first. 
@@ -63,7 +63,7 @@ If you turn off the Pi *without* giving it time to process recent recordings, or
 * If recording is currently active, the current recording must stop and be processed before it becomes available for transfer.
 
 ## How it Works
-As soon as the Raspberry Pi has booted, it starts looking for an audio interface. If it finds one, it starts recording, and keeps recording as long as the interface is there (and powered on) and as long as the Raspberry Pi is running. Look for the LED to start blinking slowly when recording starts.
+After the Raspberry Pi has booted, it waits 30 seconds and then starts looking for an audio interface. The 30 seconds delay give the USB connection time to get ready - the value is found experimentally. If the Pi finds the audio interface, it starts recording, and keeps recording as long as the interface is there (and powered on) and as long as the Raspberry Pi is running. Look for the LED to start blinking slowly when recording starts.
 
 Recording is happening the entire time the Pi and the Audio Interface are running, regardless of you making any music or not. 
 
