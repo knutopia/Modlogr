@@ -93,7 +93,7 @@ The ffmpeg command parameters need to be modified when other audio interfaces ar
 As you will learn when reviewing ffmpeg documentation, the parameter sequence consists of a set of source parameters, and one or more sets of destination parameters.
 
 ## Files & Locations
-Log files in */home/pi/*
+Log files in */home/pi/Modlogr/Logs*
 * *monit.log,* capturing output from monit and from bash scripts running as programs from monit
 * *logster.log,* capturing output from bash scripts running as processes
 * *recordings.log,* capturing date- and timestamps for raw recordings
@@ -110,9 +110,9 @@ Bash script files in */usr/local/bin/*
 * *deleteOldRecordings.sh* (not used yet:) will delete the oldest subfolder of recordings in /home/pi/processedRecordings to free up disk space
 
 Directories for Recordings
-* Raw recordings are saved in */home/pi/rawRecordings/*
-* Processed recordings are saved in subfolders under */home/pi/processedRecordings*
-* A utility folder is used for temporary files during processing: */home/pi/processingRecordings*
+* Raw recordings are saved in */home/pi/Modlogr/rawRecordings/*
+* Processed recordings are saved in subfolders under */home/pi/Modlogr/processedRecordings*
+* A utility folder is used for temporary files during processing: */home/pi/Modlogr/processingRecordings*
 
 Installation
 #######
