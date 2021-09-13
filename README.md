@@ -1,10 +1,11 @@
 # Modlogr
-This project turns a Raspberry Pi into an automatic USB audio recorder which works with your USB audio interface. The purpose of this is to be able to record music on a modular synthesizer without having to connect a computer and without having to interact with a DAW on the computer. The Raspberry Pi just sits there and records, and the musician can focus on the music. Later, the files recorded by the Raspberry Pi can be transferred to the computer and dropped into a DAW for further processing and mastering.
-Of course this works for any instrument recorded with a USB audio interface, not just for a modular synthesizer. 
+Turns a Raspberry Pi into an automatic USB audio recorder which works with your existing USB audio interface. 
+
+Record music without having to connect a computer, DAWless. Meant to work with a modular synth, or any other instrument, banning the laptop from the table. The Raspberry Pi just sits there and records, and the musician can focus on the music. Later, the files recorded by the Raspberry Pi can be transferred to the computer and dropped into a DAW or into an audio editor.
 
 ## Required Equipment
 * Something to make music with
-* A class-compliant USB audio interface. The project is written for the Expert Sleepers ES8, an audio interface in a eurorack module form factor. With some edits, the code should work with any class-compliant interface.
+* A class-compliant USB audio interface. The project is written for the *Expert Sleepers ES8,* an audio interface in a eurorack module form factor. With some edits, the code should work with any class-compliant interface.
 * A Raspberry Pi 400. Other Raspberry PI variations should work too, specifically a Raspberry Pi 4, which is basically what is inside a Pi 400. 
   * Since the Raspberry Pi 400 is built into its own keyboard, but other Pi versions are just a raw circuit board, consider getting a case for your Pi unless it is a Pi 400. When choosing a case, consider that a case without a fan will be silent, whereas a case with a fan will be noisy while you are making music.
 * A recent version of Raspbian, the default OS on the Raspberry Pi. The project was developed on *Raspbian GNU Linux 10 (buster)*
