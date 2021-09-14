@@ -1,7 +1,7 @@
 # Modlogr
 *Turns a Raspberry Pi into an automatic USB audio recorder tu use with an existing USB audio interface.*
 
-Record audio without having to connect a full computer, DAWless. Meant to work with a modular synth or any other instrument, banning the laptop from the table. The Raspberry Pi just sits there and records, using your existing high-quality audio interface. The musician can focus on the music. Later, the files recorded by the Raspberry Pi can be transferred to the computer and dropped into a DAW or into an audio editor.
+Record music without having to connect a full computer, DAWless. Meant to work with a modular synth or any other instrument, banning the laptop from the table. The Raspberry Pi just sits there and records, using your existing high-quality audio interface. The musician can focus on the music. Later, the files recorded by the Raspberry Pi can be transferred to the computer and dropped into a DAW or into an audio editor.
 
 ## Required Equipment
 * Something to make music with
@@ -16,7 +16,7 @@ Record audio without having to connect a full computer, DAWless. Meant to work w
 * File transfer software on the computer to download the recordings from the Raspberry Pi (see Pi documentation), like FileZilla.
 
 ## Expected Skill Level
-This is a coding project, not a consumer product. Teach yourself to operate a Raspberry Pi, to edit files on it, to run command line actions. Many people have done this. The internet is full of great support resources. *The ugly stuff:* Don't expect everything to just work. Don't ask me to fix your problems. Using this project is a privilege, not a right.
+This is a project, not a consumer product. Don't expect everything to just work. Teach yourself to operate a Raspberry Pi, to edit files on it, to run command line actions. Many people have done this. The internet is full of great support resources.
 
 ## Basic Operation
 
