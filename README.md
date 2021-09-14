@@ -6,8 +6,8 @@ Record music without having to connect a full computer, DAWless. Meant to work w
 ## Required Equipment
 * Something to make music with
 * A class-compliant USB audio interface. The project is written for the *Expert Sleepers ES8,* an audio interface in a eurorack module form factor. With some edits, the code should work with any class-compliant interface.
-* A Raspberry Pi 400. Other Raspberry PI variations should work too, specifically a Raspberry Pi 4, which is basically what is inside a Pi 400. 
-  * Since the Raspberry Pi 400 is built into its own keyboard, but other Pi versions are just a raw circuit board, consider getting a case for your Pi unless it is a Pi 400. When choosing a case, consider that a case without a fan will be silent, whereas a case with a fan will be noisy while you are making music.
+* A Raspberry Pi 4 or Raspberry Pi 400. Other Raspberry PI variations might work too. 
+  * Since the Pi 4 is just a raw circuit board, consider getting a case for your Pi 4. (The Pi 400 is built into a keyboard case.) When choosing a case, consider that a case without a fan will be silent, whereas a case with a fan will be noisy while you are making music.
 * A recent version of Raspbian, the default OS on the Raspberry Pi. The project was developed on *Raspbian GNU Linux 10 (buster)*
 * A large, fast MicroSD card. An hour of recording with 4 tracks takes about 600 MiB of space as FLAC.
 * A computer with a DAW (I use a Macbook Pro with Ableton Live) that can import audio files (FLAC files, specifically)
