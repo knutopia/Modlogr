@@ -20,7 +20,7 @@
 # instead of using the -hide_banner option
 # ffmpeg -y -report \
 
-  local_log_file="/home/pi/Modlogr/Logs/ffmpeg.log"
+  local_log_file="/home/pi/Modlogr/logs/ffmpeg.log"
   local_id="recordAudio.sh"
 
   echo -n `date '+%F_%H:%M:%S'` $local_id

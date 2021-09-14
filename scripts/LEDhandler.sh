@@ -3,8 +3,8 @@ cmd=$1
 
 #Script to show activity status on the built-in LED
 
-. /usr/local/bin/sourceCheck.sh
-. /usr/local/bin/isRecordingActive.sh
+. /home/pi/Modlogr/scripts/sourceCheck.sh
+. /home/pi/Modlogr/scripts/isRecordingActive.sh
 
 recordingPidFile="/home/pi/Modlogr/ffmpeg.pid"
 id="LEDhandler.sh"
