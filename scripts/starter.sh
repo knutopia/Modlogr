@@ -45,7 +45,7 @@ if sourceCheck ; then
   fi
   cd /home/pi/Modlogr/logs
 
-  source recordAudio.sh
+  source /home/pi/Modlogr/scripts/recordAudio.sh
   ffmpeg_pid=$new_pid
   echo " " $ffmpeg_pid
 
@@ -54,7 +54,7 @@ if sourceCheck ; then
   echo $ffmpeg_pid >> $src_chk_file
   >>/dev/null
 
-  LEDhandler.sh recordingStart
+  /home/pi/Modlogr/scripts/LEDhandler.sh recordingStart
   exit 0
 else 
   echo "$sourceCheckTime" failed >> $src_chk_file

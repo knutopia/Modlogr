@@ -7,7 +7,7 @@ cmd=$1
 . /home/pi/Modlogr/scripts/isRecordingActive.sh
 
 recordingPidFile="/home/pi/Modlogr/ffmpeg.pid"
-id="LEDhandler.sh"
+id="/home/pi/Modlogr/scripts/LEDhandler.sh"
 echo `date '+%F_%H:%M:%S'` $id $cmd
 
 case $cmd in

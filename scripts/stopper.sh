@@ -41,7 +41,7 @@ if [[ -f $pidFile  ]]; then
       echo $id "It's dead."
     fi
     rm $pidFile
-    LEDhandler.sh recordingStop
+    /home/pi/Modlogr/scripts/LEDhandler.sh recordingStop
   fi
 else
   echo $id "No pid file, no kill."
