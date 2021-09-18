@@ -1,9 +1,5 @@
 #!/bin/bash
 
-. /home/pi/Modlogr/scripts/processStepOne.sh
-. /home/pi/Modlogr/scripts/processStepTwo.sh
-
-
 id="processRawAudio.sh"
 log_file="/home/pi/Modlogr/logs/logster.log"
 echo `date '+%F_%H:%M:%S'` $id >>$log_file
@@ -45,7 +41,7 @@ for rawFile in /home/pi/Modlogr/rawRecordings/*.flac ; do
 #     -i "$rawFile" \
 #     -f segment -segment_time 3600 -c:a pcm_s24be \
 #     /home/pi/Modlogr/processingRecordings/"$origFileName"-%03d_interim.aiff
-      source processStepOne.sh
+      source /home/pi/Modlogr/scripts/processStepOne.sh
       ffsuccess=$?
       if [ "${ffsuccess}" -ne "0" ] ; then
         echo $id "-FAILED to split" "$origFileName" >>$log_file
@@ -71,7 +67,7 @@ for rawFile in /home/pi/Modlogr/rawRecordings/*.flac ; do
 #       nice -n 10 ffmpeg -y -hide_banner -loglevel quiet -stats \
 #       -i "$interimFile" \
 #       $targetDirectoryName"/"$targetFileName
-        source processStepTwo.sh
+        source /home/pi/Modlogr/scripts/processStepTwo.sh
         ffsuccess=$?
         # delete interim file upon successful recompression
 	if [ "${ffsuccess}" -eq "0" ] ; then
