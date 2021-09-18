@@ -34,7 +34,7 @@ case $cmd in
         echo $id "recording active, no LED update"
       else
                      # if not recording, show quick "busy" blink
-        echo $id " not recording, showing processing LED"
+        echo $id "not recording, showing processing LED"
 
         modprobe ledtrig_timer  #processing LED
         echo "timer" >/sys/class/leds/led0/trigger
@@ -45,10 +45,10 @@ case $cmd in
     updateAfterProcessing)  # sent from bottom of processRawAudio.sh 
                             # when done processing or when nothing found
 #     echo $id "updateAfterProcessing"
-      if isRecordingActive ; then
+      if isRecordingActive; then
                             # if recording is active, 
                             # activate recording pattern
-        echo $id " recording found active"
+        echo $id "recording found active"
 
         modprobe ledtrig_timer  #recording LED
         echo "timer" >/sys/class/leds/led0/trigger
@@ -58,12 +58,12 @@ case $cmd in
         if sourceCheck; then
                             # not recording, not processing,
                             # input device available: default LED (disk)
-          echo $id " not recording, not processing, input available"
+          echo $id "not recording, not processing, input available"
           echo mmc0 >/sys/class/leds/led0/trigger
         else
                             # no input device found
                             # show a fast "alarm" blink
-          echo $id " source unavailable"
+          echo $id "source unavailable"
           modprobe ledtrig_timer  #source unavailable LED
           echo "timer" >/sys/class/leds/led0/trigger
           echo 100 >/sys/class/leds/led0/delay_on
