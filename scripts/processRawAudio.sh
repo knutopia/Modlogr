@@ -1,5 +1,9 @@
 #!/bin/bash
 
+. /home/pi/Modlogr/scripts/processStepOne.sh
+. /home/pi/Modlogr/scripts/processStepTwo.sh
+
+
 id="processRawAudio.sh"
 log_file="/home/pi/Modlogr/logs/logster.log"
 echo `date '+%F_%H:%M:%S'` $id >>$log_file
@@ -37,10 +41,11 @@ for rawFile in /home/pi/Modlogr/rawRecordings/*.flac ; do
 
       echo $id "-Splitting" "$origFileName" >>$log_file
 
-      nice -n 10 ffmpeg -y -hide_banner -loglevel quiet -stats \
-      -i "$rawFile" \
-      -f segment -segment_time 3600 -c:a pcm_s24be \
-      /home/pi/Modlogr/processingRecordings/"$origFileName"-%03d_interim.aiff
+#     nice -n 10 ffmpeg -y -hide_banner -loglevel quiet -stats \
+#     -i "$rawFile" \
+#     -f segment -segment_time 3600 -c:a pcm_s24be \
+#     /home/pi/Modlogr/processingRecordings/"$origFileName"-%03d_interim.aiff
+      source processStepOne.sh
       ffsuccess=$?
       if [ "${ffsuccess}" -ne "0" ] ; then
         echo $id "-FAILED to split" "$origFileName" >>$log_file
@@ -63,9 +68,10 @@ for rawFile in /home/pi/Modlogr/rawRecordings/*.flac ; do
         echo $id "--Recompressing flac from" "$interimFileName" \
         >>$log_file
 
-        nice -n 10 ffmpeg -y -hide_banner -loglevel quiet -stats \
-        -i "$interimFile" \
-        $targetDirectoryName"/"$targetFileName
+#       nice -n 10 ffmpeg -y -hide_banner -loglevel quiet -stats \
+#       -i "$interimFile" \
+#       $targetDirectoryName"/"$targetFileName
+        source processStepTwo.sh
         ffsuccess=$?
         # delete interim file upon successful recompression
 	if [ "${ffsuccess}" -eq "0" ] ; then
