@@ -9,10 +9,10 @@ id="stopper.sh"
 echo `date '+%F_%H:%M:%S'` $id
 
 if [[ -f $pidFile  ]]; then
-  echo $id "Pid file found."
+  echo -n $id "Pid file found."
   #does the process exist?
 
-  pgrep -F $pidFile
+  pgrep -F $pidFile> /dev/null
   found_alive=$?
 
   if [[ $found_alive -eq 1 ]]; then
@@ -21,7 +21,7 @@ if [[ -f $pidFile  ]]; then
   else
     foo=0
     while pgrep -F $pidFile; do
-      echo $id "Pid is live - killing it"
+      echo -n $id "Pid is live - killing it"
       pkill -SIGTERM -F $pidFile
       sleep 1
       ((foo++))
@@ -31,7 +31,7 @@ if [[ -f $pidFile  ]]; then
     done
 
     #did it work?
-    pgrep -F $pidFile >/dev/null
+    pgrep -F $pidFile> /dev/null
     pid_is_stale=$?
 
     if [[ $pid_file_is_stale -eq 1 ]]; then

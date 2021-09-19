@@ -15,10 +15,13 @@ echo `date '+%F_%H:%M:%S'` $id >>$log_file
 
 success=true  #track execution to later delete raw file
               #and for exit code
+
 if test -n "$(find /home/pi/Modlogr/rawRecordings/ -maxdepth 1 -name '*.flac')" ; then
 
 #/home/pi/Modlogr/scripts/LEDhandler.sh processingStart
-/bin/bash -c '2>&1 1>>$log_file /home/pi/Modlogr/scripts//home/pi/Modlogr/scripts/LEDhandler.sh processingStart'
+#/bin/bash -c '2>&1 1>>$log_file /home/pi/Modlogr/scripts/LEDhandler.sh processingStart'
+/bin/bash -c '/home/pi/Modlogr/scripts/LEDhandler.sh processingStart'
+
 for rawFile in /home/pi/Modlogr/rawRecordings/*.flac ; do
 
   origFileName="$(basename $rawFile .flac)"
@@ -108,7 +111,8 @@ else
   echo $id "No flac files found" >>$log_file
 fi
 
-/bin/bash -c '2>&1 1>>$log_file /home/pi/Modlogr/scripts//home/pi/Modlogr/scripts/LEDhandler.sh updateAfterProcessing'
+#/bin/bash -c '2>&1 1>>$log_file /home/pi/Modlogr/scripts/LEDhandler.sh updateAfterProcessing'
+/bin/bash -c '/home/pi/Modlogr/scripts/LEDhandler.sh updateAfterProcessing'
 
 if [[ $success == true ]] ; then
   echo `date '+%F_%H:%M:%S'` $id "Exiting 0" >>$log_file
