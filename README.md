@@ -126,8 +126,8 @@ On https://github.com/knutopia/Modlogr click **Download ZIP** in the green **Cod
 3. In the Pi file manager, locate the download **Modlogr-main.zip** in the Downloads folder (/home/pi/Downloads).  Right-click the downloaded file and select **Extract To...** in the menu.  Choose **Home** as the destination (in the top-right corner of the dialog) and **Extract** the archive.
 4. In the Pi file manager, locate the **Modlogt-main** folder that the unzip operation created in /home/pi.  Right-click the folder name and select **Rename** in the menu.  Rename the folder to **Modlogr**
 5. In the Pi file manager, navigate to the **scripts** folder inside Modlogr (/home/pi/Modlogr/scripts).
-6. Looking at the contents of the **scripts** folder in the Pi file manager, open the **Tools** menu in the menu bar and choose **Open Current Folder in Terminal**.
-7. In the terminal, run the install.sh script:  
+6. In the Pi file manager, looking at the contents of the **scripts** folder, open the **Tools** menu in the menu bar and choose **Open Current Folder in Terminal**.
+7. In the new terminal, run the install.sh script:  
 pi@raspberrypi:~ $ **./install.sh**  
 8. Connect your USB audio interface.
 9. Restart the Raspberry Pi.
