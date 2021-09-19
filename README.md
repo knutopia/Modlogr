@@ -21,7 +21,7 @@ This is a project, not a consumer product. Don't expect everything to just work.
 ## Basic Operation
 
 ### Setup
-1. Install the project
+1. [Install](#installation) the project
 1. Connect your musical instrument to your audio interface to record it
 1. Connect the USB output of your audio interface to a USB input on the Raspberry PI (######### WHICH INPUT?)
 1. Restart the Raspberry Pi
@@ -116,7 +116,7 @@ Directories for Recordings
 * Processed recordings are saved in subfolders under */home/pi/Modlogr/processedRecordings*
 * A utility folder is used for temporary files during processing: */home/pi/Modlogr/processingRecordings*
 
-## Installation
+## <a name="installation">Installation</a>
 Access the GUI on your Pi locally or through VNC viewer.
 
 1. From the Pi terminal, install the Monit utility:  
