@@ -116,5 +116,19 @@ Directories for Recordings
 * Processed recordings are saved in subfolders under */home/pi/Modlogr/processedRecordings*
 * A utility folder is used for temporary files during processing: */home/pi/Modlogr/processingRecordings*
 
-Installation
-#######
+##Installation
+Access the GUI on your Pi locally or through VNC viewer.
+
+1. From the Pi terminal, install the Monit utility:
+pi@raspberrypi:~ $ sudo apt-get install monit
+2. In the chromium web browser on the Pi, download the project zip file from GitHub:
+Go to https://github.com/knutopia/Modlogr and click **Download ZIP** in the green Code menu
+3. In the Pi file manager, locate the download **Modlogr-main.zip** in the Downloads folder (/home/pi/Downloads). Right-click the downloaded file and select **Extract To...** in the menu. Choose **Home** as the destination (in the top-right corner of the dialog) and **Extract** the archive.
+4. In the Pi file manager, locate the **Modlogt-main** folder that the unzip operation created in /Home/pi. Right-click the folder name and select **Rename** in the menu. Rename the folder to **Modlogr**
+5. In the Pi file manager, navigate to the **scripts** folder inside Modlogr (/home/pi/Modlogr/scripts).
+6. Looking at the contents of the **scripts** folder in the Pi file manager, open the **Tools** menu in the menu bar and choose **Open Current Folder in Terminal**.
+7. In the terminal, run the install.sh script:
+pi@raspberrypi:~ $ ./install.sh
+(This script puts the monitrc into the /etc/monit folder, where the monit utility expects it.)
+8. Connect your USB audio interface.
+9. Restart the Raspberry Pi.
