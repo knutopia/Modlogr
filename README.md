@@ -20,6 +20,8 @@ This is a project, not a consumer product. Don't expect everything to just work.
 
 ## Basic Operation
 
+*In short:* when the Raspberry Pi is powered on, and the audio interface is connected to it and powered on, then the Pi starts recording, and keeps recording. Turn turn off the equipment or disconnect the audio interface when you don't want it to be recording.
+
 ### Setup
 1. [Install](#installation) the project
 1. Connect your musical instrument to your audio interface to record it
@@ -51,13 +53,11 @@ If you turn off the Raspberry Pi while it is recording, the recording simply sto
 If you turn off the Pi *without* giving it time to process recent recordings, or while it is processing recordings, the processing of raw recordings will restart  the next time you power up the Pi.
 
 ### Transferring Files
-1. Power on the Raspberry Pi if it is off 
-2. On your computer, connect to the Pi using your file transfer software
-3. In the file transfer software, navigate to the Processed Recordings folderon the Pi.
-4. Transfer the recordings you want to your computer
-5. On your computer, import the transferred files into your DAW. 
-6. in the file transfer software, delete the processed recording you just transferred from the Raspberry Pi, to free up space. Aslo delete other recordings that you don't plan to use.
-7. When done, turn off the Raspberry Pi. 
+1. On your computer, connect to the Pi using your file transfer software
+2. In the file transfer software, navigate to the Processed Recordings folderon the Pi.
+3. Transfer the recordings you want to your computer
+4. On your computer, import the transferred files into your DAW. 
+5. in the file transfer software, delete the processed recording you just transferred from the Raspberry Pi, to free up space. Aslo delete other recordings that you don't plan to use.
  
 * Files can be transferred to the computer while recording is happening. 
 * Only past recordings that have been processed are available for transfer in the *Processed Recordings* folder. 
