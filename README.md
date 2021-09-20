@@ -82,7 +82,7 @@ Raw files can also become very large, for very long recordings (when recording o
 Processing splits the raw recordings into one-hour chunks. Those chunks can be spliced seamlessly in the DAW, and uninteresting parts of long recordings can be easily discarded.
 
 ### Behind the Scenes
-Overall operations are controlled by the *Monit* utility, which (you guessed it) monitors resources and processes, as defined in the *monitrc* file. Monit looks for the audio interface, launches and terminates recording, launches processing, and orchestrates updates to the LED. Monit also watches available disk space. To do all this, Monit calls bash shell scripts, as processes (running in the background), or as programs (running in the foreground.) The scripts use .pid files to keep track of running processes.
+Overall operations are controlled by the *Monit* utility, which (you guessed it) monitors resources and processes, as defined in the *monitrc* file. Monit looks for the audio interface, launches and terminates recording, launches processing, and orchestrates updates to the LED. Monit also watches available disk space, and trims the log files when they become too large. To do all this, Monit calls bash shell scripts, as processes (running in the background), or as programs (running in the foreground.) The scripts use .pid files to keep track of running processes.
 
 Recording and processing is done using the *ffmpeg* command, a powerful recording utility, accessing the audio interface via the *ALSA* audio system. While recording, the audio is also passed back to the audio interface for playback to provide visual feedback on the LEDs of the ES8 interface. In theory, this output could be used for audio monitoring through the ES8, but in practice the latency is far too high.
 
@@ -94,7 +94,7 @@ The ffmpeg command parameters need to be modified when other audio interfaces ar
 As you will learn when reviewing ffmpeg documentation, the parameter sequence consists of a set of source parameters, and one or more sets of destination parameters.
 
 ## Files & Locations
-Log files in */home/pi/Modlogr/Logs*
+Log files in */home/pi/Modlogr/logs*
 * *monit.log,* capturing output from monit and from bash scripts running as programs from monit
 * *logster.log,* capturing output from bash scripts running as processes
 * *recordings.log,* capturing date- and timestamps for raw recordings
@@ -102,13 +102,18 @@ Log files in */home/pi/Modlogr/Logs*
 
 */etc/monit/monitrc* is the monit control file
 
-Bash script files in */usr/local/bin/*
+Bash script files in */home/pi/Modlogr/scripts*
+* *install.sh* moves the *monitrc* file into */etc/monit* where the monit utility expects it
 * *starter.sh* starts recording audio
 * *recordAudio.sh* contains the ffmpeg call doing the actual recording, with hardware-specific parameters
 * *stopper.sh* stops recording by sending a SIGTERM signal to the recording process
+* *processRawAudio.sh* processes raw audio files, splitting into 1-hour aiff files and then resaving as flac, grouped in subfolders
+* *processStepOne.sh* is called by processRawAudio.sh to split raw audio files into chunks
+* *processStepTwo.sh* is called by processRawAudio.sh to re-save the smaller audio files
 * *sourceCheck.sh* checks availability of audio interface
 * *isRecordingActive* checks if the recording process is running, used by starter.sh and by LEDhandler.sh
-* *LEDhandler.sh* updates the status LEDprocessRawAudio.sh processes raw audio files, splitting into 1-hour aiff files and then resaving as flac, grouped in subfolders
+* *LEDhandler.sh* updates the status LED
+* *mindLogFolderSize* checks the size of */home/pi/Modlogr/logs* and trims the log files when the size gets too large 
 * *deleteOldRecordings.sh* (not used yet:) will delete the oldest subfolder of recordings in /home/pi/processedRecordings to free up disk space
 
 Directories for Recordings
