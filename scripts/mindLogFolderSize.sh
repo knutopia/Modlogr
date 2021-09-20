@@ -8,8 +8,9 @@ id="mindLogFolderSize.sh"
 size=$(/usr/bin/du -s $folder_path  | /usr/bin/awk '{print $1}')
 echo `date '+%F_%H:%M:%S'` $id "${size}kB" >>$log_file
 
-if [[ $size -gt $(( 1024 )) ]]; then
+if [[ $size -gt $(( 450 )) ]]; then
   sudo truncate -c --size='<'100K /home/pi/Modlogr/logs/*.log
-  echo -n $id "truncated" %? >>$log_file
+  result = %?
+  echo $id "truncated" result >>$log_file
 fi
 
