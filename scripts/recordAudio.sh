@@ -25,7 +25,7 @@
 
   echo -n `date '+%F_%H:%M:%S'` $local_id
   
-  ffmpeg -y -hide_banner -loglevel error -stats \
+  ffmpeg -y -hide_banner -loglevel error \
   -guess_layout_max 2 -f alsa \
   -codec:a pcm_s32le -re \
   -ac 8 -ar 48000 -i hw:CARD=ES8 \
