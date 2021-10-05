@@ -136,3 +136,6 @@ On https://github.com/knutopia/Modlogr click **Download ZIP** in the green **Cod
 pi@raspberrypi:~ $ **./install.sh**  
 8. Connect your USB audio interface.
 9. Restart the Raspberry Pi.
+
+
+<img alt="Raspberry Pi sitting on top of a Eurorack systm" src="https://user-images.githubusercontent.com/2887520/135940634-22b9cef5-9f3f-4373-aa45-aaf08784f18e.jpg" width=50%>
