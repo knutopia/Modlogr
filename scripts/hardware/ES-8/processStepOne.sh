@@ -1,9 +1,10 @@
 #!/bin/bash
 
-# For a raw recording, this script creates one or more interim 
-# .aiff files of up to an hour in duration.
+# This script records the USB audio card to a file per channel
+# when the USB audio card is found to be available.
+# The incoming channels are also played back on the card for visual feedback.
 
-# Use the following line to debug ffmpeg output to a log detailed file
+# Use this line to debug ffmpeg output to a log detailed file
 # instead of using the -hide_banner option
 # ffmpeg -y -report \
 

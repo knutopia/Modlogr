@@ -1,0 +1,40 @@
+set daemon 10
+   with start delay 30 
+#  this start delay ensures that the intial recording won't fail
+#  when Pi gets restarted while audio interface remains on
+#  or when Pi starts after audio interface
+#  ...shorter delays failed to prevent this.
+ 
+set log /home/pi/Modlogr/logs/monit.log
+
+set httpd port 2812 and
+   use address localhost  # only accept connection from localhost (drop if you use M/Monit)
+   allow localhost        # allow localhost to connect to the server and
+
+check program mindLogFolderSize 
+  with path "/home/pi/Modlogr/scripts/mindLogFolderSize.sh"
+  every 3 cycles
+  start program = "/bin/bash -c '/home/pi/Modlogr/scripts/mindLogFolderSize.sh'"
+  if status != 0 then alert 
+
+check filesystem rootfs with path /
+if space usage > 15% then alert
+
+#check directory ES8 with path /proc/asound/ES8
+check directory AudioInterface with path /proc/asound/USB
+
+check program processRawAudio
+  with path /home/pi/Modlogr/scripts/processRawAudio.sh with timeout 10800 s
+  every 3 cycles
+  start program = "/bin/bash -c 'sleep 1; /home/pi/Modlogr/scripts/processRawAudio.sh'"
+  if status !=0 then alert
+
+check process ffmpegStreamRecorder
+with pidfile /home/pi/Modlogr/ffmpeg.pid
+depends on AudioInterface
+start program = "/bin/bash -c '2>&1 1>>/home/pi/Modlogr/logs/logster.log /home/pi/Modlogr/scripts/starter.sh'"
+stop program = "/bin/bash -c '2>&1 1>>/home/pi/Modlogr/logs/logster.log /home/pi/Modlogr/scripts/stopper.sh'"
+if cpu > 15% then alert
+if cpu > 20% for 3 cycles then restart
+if cpu < 1% for 3 cycles then alert
+if cpu < 1% for 3 cycles then restart

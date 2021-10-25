@@ -47,7 +47,7 @@ if sourceCheck ; then
 
   source /home/pi/Modlogr/scripts/recordAudio.sh
   ffmpeg_pid=$new_pid
-  echo $ffmpeg_pid
+  echo " > "$ffmpeg_pid
 
   echo $tail $ffmpeg_pid >> $recordings_file
   echo $ffmpeg_pid > $pid_file
