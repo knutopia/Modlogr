@@ -20,7 +20,9 @@ check program mindLogFolderSize
 check filesystem rootfs with path /
 if space usage > 15% then alert
 
-check directory ES8 with path /proc/asound/ES8
+#check directory ES8 with path /proc/asound/ES8
+check directory AudioInterface with path /proc/asound/USB
+#check directory AudioInterface with path /proc/asound/MODULAR
 
 check program processRawAudio
   with path /home/pi/Modlogr/scripts/processRawAudio.sh with timeout 10800 s
@@ -30,7 +32,7 @@ check program processRawAudio
 
 check process ffmpegStreamRecorder
 with pidfile /home/pi/Modlogr/ffmpeg.pid
-depends on ES8
+depends on AudioInterface
 start program = "/bin/bash -c '2>&1 1>>/home/pi/Modlogr/logs/logster.log /home/pi/Modlogr/scripts/starter.sh'"
 stop program = "/bin/bash -c '2>&1 1>>/home/pi/Modlogr/logs/logster.log /home/pi/Modlogr/scripts/stopper.sh'"
 if cpu > 15% then alert
