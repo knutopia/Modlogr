@@ -14,14 +14,20 @@ set httpd port 2812 and
 check program mindLogFolderSize 
   with path "/home/pi/Modlogr/scripts/mindLogFolderSize.sh"
   every 3 cycles
-  start program = "/bin/bash -c '/home/pi/Modlogr/scripts/mindLogFolderSize.sh'"
+  start program = "/bin/bash -c 'nice -n 10 /home/pi/Modlogr/scripts/mindLogFolderSize.sh'"
   if status != 0 then alert 
 
 check filesystem rootfs with path /
 if space usage > 15% then alert
 
-#check directory ES8 with path /proc/asound/ES8
+# Audio Interfaces:
+# ES8 is Expert Sleepers ES-8
+# USB is Focusrite Scarlett 2i4 Gen 1 connected through a USB Hub
+# MODULAR is Roland Aira Torcido (not working)
+
+#check directory AudioInterface with path /proc/asound/ES8
 check directory AudioInterface with path /proc/asound/USB
+#check directory AudioInterface with path /proc/asound/MODULAR
 
 check program processRawAudio
   with path /home/pi/Modlogr/scripts/processRawAudio.sh with timeout 10800 s
