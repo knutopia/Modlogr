@@ -24,10 +24,12 @@ if space usage > 15% then alert
 # ES8 is Expert Sleepers ES-8
 # USB is Focusrite Scarlett 2i4 Gen 1 connected through a USB Hub
 # MODULAR is Roland Aira Torcido (not working)
+# THR10 is Yamaha THR10
 
 check directory AudioInterface with path /proc/asound/ES8
 #check directory AudioInterface with path /proc/asound/USB
 #check directory AudioInterface with path /proc/asound/MODULAR
+#check directory AudioInterface with path /proc/asound/THR10
 
 check program processRawAudio
   with path /home/pi/Modlogr/scripts/processRawAudio.sh with timeout 10800 s
