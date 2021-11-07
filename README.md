@@ -13,7 +13,7 @@ Record music without having to connect a full computer, DAWless. Meant to work w
 * A computer with a DAW (I use a Macbook Pro with Ableton Live) that can import audio files (FLAC files, specifically)
 * Remote-control software on the computer to operate the Raspberry PI (see Pi documentation), like VNC Viewer. 
   * You can also connect a screen, mouse and keyboard to the Pi to operate it directly (or use the built-in keyboard of the Pi 400), but remote operation is convenient.
-* File transfer software on the computer to download the recordings from the Raspberry Pi (see Pi documentation.) VNC Viewer has file transfer functionality built in. which is convenient for transferring files during a VNC session. For simple file transfer without a VNC session, consider FileZilla.
+* File transfer software on the computer to download the recordings from the Raspberry Pi (see Pi documentation.) VNC Viewer has file transfer functionality built in, which is convenient for transferring files during a VNC session. For simple file transfer without a VNC session, consider FileZilla.
 
 ## Expected Skill Level
 This is a project, not a consumer product. Don't expect everything to just work. Teach yourself to operate a Raspberry Pi, to edit files on it, to run command line actions. Many people have done this. The internet is full of great support resources.
