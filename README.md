@@ -13,7 +13,7 @@ Record music without having to connect a full computer, DAWless. Meant to work w
 * A computer with a DAW (I use a Macbook Pro with Ableton Live) that can import audio files (FLAC files, specifically)
 * Remote-control software on the computer to operate the Raspberry PI (see Pi documentation), like VNC Viewer. 
   * You can also connect a screen, mouse and keyboard to the Pi to operate it directly (or use the built-in keyboard of the Pi 400), but remote operation is convenient.
-* File transfer software on the computer to download the recordings from the Raspberry Pi (see Pi documentation), like FileZilla.
+* File transfer software on the computer to download the recordings from the Raspberry Pi (see Pi documentation.) VNC Viewer has file transfer functionality built in. which is convenient for transferring files during a VNC session. For simple file transfer without a VNC session, consider FileZilla.
 
 ## Expected Skill Level
 This is a project, not a consumer product. Don't expect everything to just work. Teach yourself to operate a Raspberry Pi, to edit files on it, to run command line actions. Many people have done this. The internet is full of great support resources.
@@ -89,9 +89,19 @@ Recording and processing is done using the *ffmpeg* command, a powerful recordin
 Raw recording files, processed recordings, and interim files (during processing) live in their own subfolders. Processed recordings are grouped together in subfolders per recording session. Files are named by track number and by recording date- and timestamp.
 
 ## Using Other Audio Interfaces
-The ffmpeg command parameters need to be modified when other audio interfaces are used, to match the channel count, recording frequency and data format of the interface.
+Some files need to be modified to work with a specific audio iterfaces. 
 
-As you will learn when reviewing ffmpeg documentation, the parameter sequence consists of a set of source parameters, and one or more sets of destination parameters.
+Check */home/pi/Modlogr/scripts/hardware* to see if there is a sundirectory with pre-made files for your interface. To use these files, copy the script files *(.sh)* from the subdirectory into */home/pi/Modlogr/scripts* and copy *monitrc* to */etc/monit/*
+
+If there are no matching files for your interface, you can do the modifications yourself:
+* Getting information about a connected audio interface: 
+** If you have installed Modlogr already, shut it down: on the command line, run *sudo monit stop all*
+** On the command line, run *arecord --dump-hw-params -D hw:1,0* to get information about the audio interface. You will see the name, the recording format and the sampling rate.
+** Using the file browser, navigate to /proc/asound/ and look for a the subdirectory representing the audio interface (ES-8, USB, MODULAR, THR10, or similar.)
+* in recordAudio.sh, nodify the ffmpeg command parameters modified to match the channel count, sampling rate and data format of the interface. Review the ffmpeg online documentation. 
+* in */etc/monit/monitrc*, in the *AudioInterface* section, modify the directory name to match.
+* in *sourceCheck.sh*, modify the interface directory name to match.
+* in */etc/monit/monitrc*, it might also be necessary to modify the 20% CPU threshold for the *ffmpegStreamRecorder* process to adjust to the actual processor load incurred by a specific interface.
 
 ## Files & Locations
 Log files in */home/pi/Modlogr/logs*
