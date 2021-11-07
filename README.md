@@ -6,7 +6,7 @@ Record music without having to connect a full computer, DAWless. Meant to work w
 ## Required Equipment
 * Something to make music with
 * A class-compliant USB audio interface. The project is written for the *Expert Sleepers ES8,* an audio interface in a eurorack module form factor. With some edits, the code should work with any class-compliant interface.
-* A Raspberry Pi 4 or Raspberry Pi 400. Other Raspberry PI variations might work too. 
+* A Raspberry Pi 4 or Raspberry Pi 400. Other Raspberry PI variations might work too.
   * Since the Pi 4 is just a raw circuit board, consider getting a case for your Pi 4. (The Pi 400 is built into a keyboard case.) When choosing a case, consider that a case without a fan will be silent, whereas a case with a fan will be noisy while you are making music.
 * A recent version of Raspbian, the default OS on the Raspberry Pi. The project was developed on *Raspbian GNU Linux 10 (buster)*
 * A large, fast MicroSD card. An hour of recording with 4 tracks takes about 600 MiB of space as FLAC.
@@ -14,6 +14,11 @@ Record music without having to connect a full computer, DAWless. Meant to work w
 * Remote-control software on the computer to operate the Raspberry PI (see Pi documentation), like VNC Viewer. 
   * You can also connect a screen, mouse and keyboard to the Pi to operate it directly (or use the built-in keyboard of the Pi 400), but remote operation is convenient.
 * File transfer software on the computer to download the recordings from the Raspberry Pi (see Pi documentation.) VNC Viewer has file transfer functionality built in, which is convenient for transferring files during a VNC session. For simple file transfer without a VNC session, consider FileZilla.
+
+## Supported Audio Interfaces
+* *Expert Sleepers ES8*, 4-channel recording
+* *Focusrite Scarlett2i4* (1st generation), 2-channel recording (additional setup, see below)
+* *Yamaha THR10*, mono (plus stereo effects) recording (additional setup, see below)
 
 ## Expected Skill Level
 This is a project, not a consumer product. Don't expect everything to just work. Teach yourself to operate a Raspberry Pi, to edit files on it, to run command line actions. Many people have done this. The internet is full of great support resources.
