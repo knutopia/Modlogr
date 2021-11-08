@@ -30,7 +30,7 @@ This is a project, not a consumer product. Don't expect everything to just work.
 ### Setup
 1. [Install](#installation) the project
 1. Connect your musical instrument to your audio interface to record it
-1. Connect the USB output of your audio interface to a USB input on the Raspberry PI (######### WHICH INPUT?)
+1. Connect the USB output of your audio interface to a USB port on the Raspberry PI
 1. Restart the Raspberry Pi
 
 ### Status LED
