@@ -4,7 +4,7 @@
 Record music without having to connect a full computer, DAWless. Meant to work with a modular synth or any other instrument, banning the laptop from the table. The Raspberry Pi just sits there and records, using your existing high-quality audio interface. The musician can focus on the music. Later, the files recorded by the Raspberry Pi can be transferred to the computer and dropped into a DAW or into an audio editor.
 
 ## Required Equipment
-* Something to make music with
+* Something to make music with, like a modular synthesizer
 * A class-compliant USB audio interface. The project is written for the *Expert Sleepers ES8,* an audio interface in a eurorack module form factor. With some edits, the code might work with any class-compliant interface.
 * A Raspberry Pi 4 or Raspberry Pi 400. Other Raspberry PI variations might work too.
   * Since the Pi 4 is just a raw circuit board, consider getting a case for your Pi 4. (The Pi 400 is built into a keyboard case.) When choosing a case, consider that a case without a fan will be silent, whereas a case with a fan will be noisy while you are making music.
