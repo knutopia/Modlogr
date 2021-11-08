@@ -26,10 +26,10 @@ if space usage > 15% then alert
 # MODULAR is Roland Aira Torcido (not working)
 # THR10 is Yamaha THR10
 
-#check directory AudioInterface with path /proc/asound/ES8
+check directory AudioInterface with path /proc/asound/ES8
 #check directory AudioInterface with path /proc/asound/USB
 #check directory AudioInterface with path /proc/asound/MODULAR
-check directory AudioInterface with path /proc/asound/THR10
+#check directory AudioInterface with path /proc/asound/THR10
 
 check program processRawAudio
   with path /home/pi/Modlogr/scripts/processRawAudio.sh with timeout 10800 s
