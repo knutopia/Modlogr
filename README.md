@@ -137,7 +137,7 @@ Directories for Recordings
 * A utility folder is used for temporary files during processing: */home/pi/Modlogr/processingRecordings*
 
 ## <a name="installation">Installation</a>
-Access the GUI on your Pi locally or through VNC viewer to follow these steps.
+Access the GUI on your Pi locally or through VNC Viewer to follow these steps.
 
 1. From the Pi terminal, install the Monit utility:  
 pi@raspberrypi:~ $ **sudo apt-get install monit**
