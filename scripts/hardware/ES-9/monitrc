@@ -1,0 +1,66 @@
+# Modlogr: automatic headless USB audio recorder on Raspberry Pi with external USB audio interface
+#    Copyright (C) 2021  Knut Graf
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+set daemon 10
+   with start delay 30 
+#  this start delay ensures that the intial recording won't fail
+#  when Pi gets restarted while audio interface remains on
+#  or when Pi starts after audio interface
+#  ...shorter delays failed to prevent this.
+ 
+set log /home/pi/Modlogr/logs/monit.log
+
+set httpd port 2812 and
+   use address localhost  # only accept connection from localhost (drop if you use M/Monit)
+   allow localhost        # allow localhost to connect to the server and
+
+check program mindLogFolderSize 
+  with path "/home/pi/Modlogr/scripts/mindLogFolderSize.sh"
+  every 3 cycles
+  start program = "/bin/bash -c 'nice -n 10 /home/pi/Modlogr/scripts/mindLogFolderSize.sh'"
+  if status != 0 then alert 
+
+check filesystem rootfs with path /
+if space usage > 15% then alert
+
+# Audio Interfaces:
+# ES8 is Expert Sleepers ES-8
+# ES9 is Expert Sleepers ES-9
+# USB is Focusrite Scarlett 2i4 Gen 1 connected through a USB Hub
+# MODULAR is Roland Aira Torcido (not working)
+# THR10 is Yamaha THR10
+
+check directory AudioInterface with path /proc/asound/ES9
+#check directory AudioInterface with path /proc/asound/ES8
+#check directory AudioInterface with path /proc/asound/USB
+#check directory AudioInterface with path /proc/asound/MODULAR
+#check directory AudioInterface with path /proc/asound/THR10
+
+check program processRawAudio
+  with path /home/pi/Modlogr/scripts/processRawAudio.sh with timeout 10800 s
+  every 3 cycles
+  start program = "/bin/bash -c 'sleep 1; /home/pi/Modlogr/scripts/processRawAudio.sh'"
+  if status !=0 then alert
+
+check process ffmpegStreamRecorder
+with pidfile /home/pi/Modlogr/ffmpeg.pid
+depends on AudioInterface
+start program = "/bin/bash -c '2>&1 1>>/home/pi/Modlogr/logs/logster.log /home/pi/Modlogr/scripts/starter.sh'"
+stop program = "/bin/bash -c '2>&1 1>>/home/pi/Modlogr/logs/logster.log /home/pi/Modlogr/scripts/stopper.sh'"
+if cpu > 15% then alert
+if cpu > 20% for 3 cycles then restart
+if cpu < 1% for 3 cycles then alert
+if cpu < 1% for 3 cycles then restart
