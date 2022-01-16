@@ -18,12 +18,12 @@
 
 this="sourceCheck"
 sourceCheck() {
-  if [ -d "/proc/asound/ES8" ]
+  if [ -d "/proc/asound/ES9" ]
   then
-    echo $this "ES8 Found"
+    echo $this "ES9 Found"
     return 0
   else
-    echo $this "ES8 not found"
+    echo $this "ES9 not found"
     return 1
   fi
 }
